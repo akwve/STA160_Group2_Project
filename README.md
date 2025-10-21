@@ -1,7 +1,7 @@
 # STA160_Group2_Project
 Group Project for STA 160 Fall 2025
 
-[Project Plan]([url](https://docs.google.com/document/d/1Mi_rOkWk4T7W5OTuVgY2i3bZpw0nsUaYYdX0TjwR1bs/edit?usp=sharing))
+[Project Plan](https://docs.google.com/document/d/1Mi_rOkWk4T7W5OTuVgY2i3bZpw0nsUaYYdX0TjwR1bs/edit?usp=sharing)
 
 Datasets: 
 Fake and real news, https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset/data 
