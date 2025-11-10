@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>STA160 Project Demo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- ======= Header ======= -->
+  <header>
+    <h1>Welcome to My STA160 Project</h1>
+    <p>Exploring statistical methods and insights through data visualization and analysis.</p>
+  </header>
+
+  <!-- ======= Navigation ======= -->
+  <nav>
+    <a href="#about">About</a>
+    <a href="#methods">Methods</a>
+    <a href="#results">Results</a>
+    <a href="#dashboard">Dashboard</a>
+    <a href="#team">Team</a>
+  </nav>
+
+  <!-- ======= About Section ======= -->
+  <section id="about">
+    <h2>📌 About the Project</h2>
+    <p>
+      This project was created as part of STA160 to demonstrate how statistical analysis and visualization can 
+      reveal insights from complex datasets. We explore descriptive statistics, hypothesis testing, and 
+      modeling techniques to uncover meaningful patterns.
+    </p>
+  </section>
+
+  <!-- ======= Methods Section ======= -->
+  <section id="methods">
+    <h2>🧪 Methods</h2>
+    <p>
+      Our analysis includes data cleaning, exploratory data analysis (EDA), and regression modeling. 
+      Below is an overview of the workflow:
+    </p>
+    <ol>
+      <li>Data preprocessing and feature selection</li>
+      <li>Exploratory analysis and visualization</li>
+      <li>Model building and validation</li>
+      <li>Result interpretation</li>
+    </ol>
+  </section>
+
+  <!-- ======= Results Section ======= -->
+  <section id="results">
+    <h2>📊 Results & Visualizations</h2>
+
+    <h3>Key Findings</h3>
+    <table>
+      <tr>
+        <th>Variable</th>
+        <th>Mean</th>
+        <th>Std. Dev</th>
+        <th>P-value</th>
+      </tr>
+      <tr>
+        <td>Feature A</td>
+        <td>12.5</td>
+        <td>2.1</td>
+        <td>0.045</td>
+      </tr>
+      <tr>
+        <td>Feature B</td>
+        <td>8.3</td>
+        <td>1.8</td>
+        <td>0.012</td>
+      </tr>
+      <tr>
+        <td>Feature C</td>
+        <td>15.2</td>
+        <td>3.4</td>
+        <td>0.221</td>
+      </tr>
+    </table>
+
+    <h3>Sample Plot</h3>
+    <div class="plot-container">
+      <img src="https://raw.githubusercontent.com/plotly/datasets/master/images/iris-plot.png" alt="Example Plot">
+      <p class="caption">Figure 1. Example data visualization (replace with your own plot image).</p>
+    </div>
+  </section>
+
+  <!-- ======= Dashboard Section ======= -->
+   <section id="dashboard">
+  <h2>📰 Fake News Dashboard</h2>
+  <p>
+    Enter a tweet or news statement below. The backend on AWS will return
+    predictions from our BERT model and from ChatGPT, so we can compare them.
+  </p>
+
+  <label for="input-text"><strong>Input text</strong></label><br />
+  <textarea id="input-text" rows="6" style="width: 100%; max-width: 800px;"></textarea>
+
+  <br />
+  <button id="predict-btn"
+          style="margin-top: 10px; padding: 8px 16px; background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer;">
+    Predict
+  </button>
+
+  <div id="predict-result"
+       style="margin-top: 16px; padding: 12px; background:#f5f5f5; border-radius:4px; white-space:pre-wrap;">
+    <!-- outcome -->
+  </div>
+</section>
+
+<section id="team">
+  ...
+</section>
+
+
+  <!-- ======= Team Section ======= -->
+  <section id="team">
+    <h2>👩‍🔬 Team Members</h2>
+    <div class="team">
+      <div class="member">
+        <h4>Your Name</h4>
+        <p>Lead Data Analyst</p>
+      </div>
+      <div class="member">
+        <h4>Collaborator’s Name</h4>
+        <p>Visualization Specialist</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <p>© 2025 STA160 Project Demo | Built with ❤️ and GitHub Pages</p>
+  </footer>
+  <script>
+  const API_URL = "http://18.221.56.156:5000/predict";  
+
+  const btn = document.getElementById("predict-btn");
+  const input = document.getElementById("input-text");
+  const resultDiv = document.getElementById("predict-result");
+
+  btn.addEventListener("click", async () => {
+    const text = input.value.trim();
+    if (!text) {
+      resultDiv.textContent = "⚠️ Please enter some text.";
+      return;
+    }
+
+    btn.disabled = true;
+    resultDiv.textContent = "⏳ Predicting...";
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text })
+      });
+
+      if (!res.ok) {
+        throw new Error("Server returned status " + res.status);
+      }
+
+      const data = await res.json();
+
+      resultDiv.textContent =
+        `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
+        `ChatGPT: ${data.gpt_label}`;
+    } catch (err) {
+      console.error(err);
+      resultDiv.textContent = "❌ Error: " + err.message;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>
