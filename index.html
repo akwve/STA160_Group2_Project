@@ -89,18 +89,20 @@
   <!-- ======= Dashboard Section ======= -->
    <section id="dashboard">
   <h2>📰 Twitter Prediction</h2>
-  <p>
+  <h2 style="font-size: 22px; font-weight: 600; margin-top: 20px;">📰 Twitter Prediction</h2>
+  <p style="font-size: 15px; color: #333;">
     Enter a tweet statement below. The backend on AWS will return
     predictions from our BERT model and from ChatGPT, so we can compare them.
   </p>
   
   <!-- BERT + ChatGPT -->
-  <label for="input-text"><strong>Input text</strong></label><br />
-  <textarea id="input-text" rows="6" style="width: 100%; max-width: 800px;"></textarea>
-
+ <label for="input-text" style="font-size: 16px; font-weight: 500;">Input text</label><br />
+ <textarea id="input-text" rows="6" 
+   style="width: 100%; max-width: 800px; padding: 10px; font-size: 15px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
+     
   <br />
   <button id="predict-btn"
-          style="margin-top: 10px; padding: 8px 16px; background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer;">
+    style="margin-top: 10px; padding: 8px 16px; background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer;">
     Predict
   </button>
 
@@ -108,29 +110,26 @@
        style="margin-top: 16px; padding: 12px; background:#f5f5f5; border-radius:4px; white-space:pre-wrap;">
     <!-- outcome -->
   </div>
+     
 <!-- XGBoost Section -->
-  <hr style="margin: 32px 0; border: 1px solid #ddd" />
-  <h3>🧠 News Prediction</h3>
-  <p>Use the same or different text to test our XGBoost model below.</p>
+  <h2 style="font-size: 22px; font-weight: 600;">🧠 News Prediction</h2>
+  <p style="font-size: 15px; color: #333;">
+    Use the same or different text to test our XGBoost model below.
+  </p>
 
-  <textarea
-    id="xgb-input"
-    rows="6"
-    style="width: 100%; max-width: 800px"
-    placeholder="Enter text for XGBoost prediction..."
-  ></textarea>
-  <br />
-  <button
-    id="xgb-btn"
-    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px"
-  >
-    Predict (XGBoost)
-  </button>
+<label for="xgb-input" style="font-size: 16px; font-weight: 500;">Input text</label><br />
+<textarea id="xgb-input" rows="6"
+  style="width: 100%; max-width: 800px; padding: 10px; font-size: 15px; border: 1px solid #ccc; border-radius: 4px;"></textarea>
 
-  <div
-    id="xgb-result"
-    style="margin-top: 16px; padding: 12px; background: #f5f5f5; border-radius: 4px; white-space: pre-wrap"
-  ></div>
+<br />
+<button id="xgb-btn"
+  style="margin-top: 10px; padding: 8px 16px; background: #3F51B5; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 15px;">
+  Predict (XGBoost)
+</button>
+
+<div id="xgb-result"
+  style="margin-top: 16px; padding: 12px; background: #f5f5f5; border-radius: 4px; white-space: pre-wrap; font-size: 15px; font-family: monospace;">
+</div>
 </section>
 
 <section id="team">
