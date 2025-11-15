@@ -179,7 +179,7 @@
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ "input_text":text })
+        body: JSON.stringify({text})
       });
       const data = await res.json(); 
       
@@ -199,6 +199,7 @@
     }
   });
 </script>
+
 <script>
   
   const XGB_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict_xgb";
