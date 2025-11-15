@@ -177,17 +177,13 @@
     try {
       const res = await fetch(API_URL, {
         method: "POST",
-        mode: "cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({text})
+        body: JSON.stringify({ text: text })
       });
-      // Call res.json() once and store the result
-      const data = await res.json(); 
       
-      if (!res.ok) {
-        throw new Error(`HTTP ${res.status}: ${data.error || JSON.stringify(data)}`);
-      }
-      // Use the 'data' variable which already holds the parsed JSON
+      const data = await res.json();
+
+
       resultDiv.textContent =
         `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
         `ChatGPT: ${data.gpt_label}`;
@@ -199,7 +195,6 @@
     }
   });
 </script>
-
 <script>
   
   const XGB_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict_xgb";
