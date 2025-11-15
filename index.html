@@ -93,7 +93,8 @@
     Enter a tweet or news statement below. The backend on AWS will return
     predictions from our BERT model and from ChatGPT, so we can compare them.
   </p>
-
+  
+  <!-- BERT + ChatGPT -->
   <label for="input-text"><strong>Input text</strong></label><br />
   <textarea id="input-text" rows="6" style="width: 100%; max-width: 800px;"></textarea>
 
@@ -107,6 +108,29 @@
        style="margin-top: 16px; padding: 12px; background:#f5f5f5; border-radius:4px; white-space:pre-wrap;">
     <!-- outcome -->
   </div>
+<!-- XGBoost Section -->
+  <hr style="margin: 32px 0; border: 1px solid #ddd" />
+  <h3>🧠 XGBoost Prediction</h3>
+  <p>Use the same or different text to test our XGBoost model below.</p>
+
+  <textarea
+    id="xgb-input"
+    rows="6"
+    style="width: 100%; max-width: 800px"
+    placeholder="Enter text for XGBoost prediction..."
+  ></textarea>
+  <br />
+  <button
+    id="xgb-btn"
+    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px"
+  >
+    Predict (XGBoost)
+  </button>
+
+  <div
+    id="xgb-result"
+    style="margin-top: 16px; padding: 12px; background: #f5f5f5; border-radius: 4px; white-space: pre-wrap"
+  ></div>
 </section>
 
 <section id="team">
@@ -171,6 +195,48 @@
       resultDiv.textContent = "❌ Error: " + err.message;
     } finally {
       btn.disabled = false;
+    }
+  });
+</script>
+<script>
+  
+  const XGB_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict_xgb";
+
+  const xgbBtn   = document.getElementById("xgb-btn");
+  const xgbInput = document.getElementById("xgb-input");
+  const xgbOut   = document.getElementById("xgb-result");
+
+  xgbBtn.addEventListener("click", async () => {
+    const text = xgbInput.value.trim();
+    if (!text) {
+      xgbOut.textContent = "⚠️ Please enter some text.";
+      return;
+    }
+
+    xgbBtn.disabled = true;
+    xgbOut.textContent = "⏳ Predicting (XGBoost)...";
+
+    try {
+      const res = await fetch(XGB_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+      });
+
+      if (!res.ok) {
+        const t = await res.text();
+        throw new Error(`HTTP ${res.status} — ${t.slice(0,150)}`);
+      }
+
+      const data = await res.json(); // { xgb_label, xgb_confidence }
+      const conf = (data.xgb_confidence == null) ? "n/a" : data.xgb_confidence;
+
+      xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})`;
+    } catch (err) {
+      console.error(err);
+      xgbOut.textContent = "❌ " + err.message;
+    } finally {
+      xgbBtn.disabled = false;
     }
   });
 </script>
