@@ -88,21 +88,25 @@
 
   <!-- ======= Dashboard Section ======= -->
    <section id="dashboard">
-  <h2>📰 Twitter Prediction</h2>
-  <p>
-    Enter a tweet statement below. The backend on AWS will return
-    predictions from our BERT model and from ChatGPT, so we can compare them.
+  <h2>Twitter Prediction</h2>
+  <p style="text-align:center; color:#555;">
+    Enter a tweet statement below. The backend on AWS will return predictions from our BERT model and from ChatGPT, so we can compare them.
   </p>
   
   <!-- BERT + ChatGPT -->
   <label for="input-text"><strong>Input text</strong></label><br />
-  <textarea id="input-text" rows="6" style="width: 100%; max-width: 800px;"></textarea>
-
+  <textarea id="input-text"
+    rows="6"
+    style="width: 100%; max-width: 800px"
+    placeholder="Enter text for BERT/XGBoost prediction..."
+  ></textarea>
   <br />
-  <button id="predict-btn"
-          style="margin-top: 10px; padding: 8px 16px; background:#4CAF50; color:white; border:none; border-radius:4px; cursor:pointer;">
+  <button
+    id="xgb-btn"
+    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px"
+  >
     Predict
-  </button>
+  </button>    
 
   <div id="predict-result"
        style="margin-top: 16px; padding: 12px; background:#f5f5f5; border-radius:4px; white-space:pre-wrap;">
@@ -110,7 +114,8 @@
   </div>
 <!-- XGBoost Section -->
   <hr style="margin: 32px 0; border: 1px solid #ddd" />
-  <h3>🧠 News Prediction</h3>
+  <h2>🧠 News Prediction</h2>
+  <p style="text-align:center; color:#555;">
   <p>Use the same or different text to test our XGBoost model below.</p>
 
   <textarea
