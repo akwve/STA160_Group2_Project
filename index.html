@@ -177,12 +177,15 @@
     try {
       const res = await fetch(API_URL, {
         method: "POST",
+        mode: "cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text })
+        body: JSON.stringify({ text })
       });
+      const data = await res.json(); 
       
-      const data = await res.json();
-
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${data.error || JSON.stringify(data)}`);
+      }
 
       resultDiv.textContent =
         `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
