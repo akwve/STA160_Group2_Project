@@ -180,12 +180,9 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: text })
       });
-
-      if (!res.ok) {
-        throw new Error("Server returned status " + res.status);
-      }
-
+      
       const data = await res.json();
+
 
       resultDiv.textContent =
         `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
