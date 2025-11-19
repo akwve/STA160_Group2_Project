@@ -26,9 +26,12 @@
   <section id="about">
     <h2>📌 About the Project</h2>
     <p>
-      This project was created as part of STA160 to demonstrate how statistical analysis and visualization can 
-      reveal insights from complex datasets. We explore descriptive statistics, hypothesis testing, and 
-      modeling techniques to uncover meaningful patterns.
+      This project was created as a part of the class, STA160, to demonstrate statistical analysis, model building, 
+      and front to back end pipeline. We used 2 machine learning models to predict whether or not a news article or 
+      tweet was true or false and compared our models’ predictions to ChatGPT. The intention is for the user to input 
+      text in the appropriate place for a tweet or news article and receive output that shows the model’s truth value
+      prediction as well as ChatGPT’s. From there, the user can make a more educated decision about whether to trust 
+      what they’ve read online.
     </p>
   </section>
 
@@ -36,14 +39,29 @@
   <section id="methods">
     <h2>🧪 Methods</h2>
     <p>
-      Our analysis includes data cleaning, exploratory data analysis (EDA), and regression modeling. 
+      Our analysis includes exploratory data analysis, modeling & feature engineering, and ChatGPT prompting.
       Below is an overview of the workflow:
     </p>
+    
     <ol>
-      <li>Data preprocessing and feature selection</li>
-      <li>Exploratory analysis and visualization</li>
-      <li>Model building and validation</li>
-      <li>Result interpretation</li>
+      <li>
+        <strong>Exploratory Data Analysis (EDA):</strong>
+        make visualizations of key variables to find basic trends in the data.
+      </li>
+      <li>
+        <strong>Basic Modeling &amp; Feature Engineering:</strong>
+        build simple baseline models to see what we might need to make accurate predictions, and
+        couple this with feature engineering.
+      </li>
+      <li>
+        <strong>Machine Learning Modeling &amp; Validation:</strong>
+        train and validate our main models (XGBoost &amp; BERT) to evaluate their performance.
+      </li>
+      <li>
+        <strong>ChatGPT Prompting:</strong>
+        design a prompt that runs in ChatGPT when input text is received, so that we can obtain an
+        equivalent True/False prediction for comparison with our models.
+      </li>   
     </ol>
   </section>
 
@@ -147,12 +165,12 @@
     <h2>👩‍🔬 Team Members</h2>
     <div class="team">
       <div class="member">
-        <h4>Your Name</h4>
-        <p>Lead Data Analyst</p>
+        <h4>Group Number</h4>
+        <p>Group 2</p>
       </div>
       <div class="member">
-        <h4>Collaborator’s Name</h4>
-        <p>Visualization Specialist</p>
+        <h4>Team Members</h4>
+        <p>Thy Pham,Han Zhou,Ayaka Suganuma,Maxwell Burns,Liam Sullivan</p>
       </div>
     </div>
   </section>
