@@ -217,7 +217,7 @@ button:active,
 
 /* 结果框 */
 #predict-result,
-#predict-xgb-result {
+#xgb-result {
   margin-top: 16px;
   padding: 12px 14px;
   background: rgba(15, 23, 42, 0.96);
@@ -243,7 +243,13 @@ textarea:focus {
     border: 1px solid #60a5fa; /* focus 时发蓝光 */
     box-shadow: 0 0 8px #60a5fa55;
 }
-
+.result-box {
+    background: #0d1224; 
+    color: #cfd8ff; 
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #23395d;
+}
 
 .team {
   display: flex;
