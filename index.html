@@ -246,10 +246,8 @@
       const conf = (data.xgb_confidence == null) ? "n/a" : data.xgb_confidence;
       const gptLabel = data.gpt_label || "N/A"; //
       
-      xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})` +
+      xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})\n` + 
       `ChatGPT: ${gptLabel}`;
-
-      
     } catch (err) {
       console.error(err);
       xgbOut.textContent = "❌ " + err.message;
