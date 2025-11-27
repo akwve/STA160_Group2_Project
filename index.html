@@ -244,8 +244,12 @@
 
       const data = await res.json(); // { xgb_label, xgb_confidence }
       const conf = (data.xgb_confidence == null) ? "n/a" : data.xgb_confidence;
+      const gptLabel = data.gpt_label || "N/A"; //
+      
+      xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})` +
+      `ChatGPT: ${gptLabel}`;
 
-      xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})`;
+      
     } catch (err) {
       console.error(err);
       xgbOut.textContent = "❌ " + err.message;
