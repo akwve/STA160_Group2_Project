@@ -88,13 +88,13 @@
     
     <ol>
       <li>
-        <strong>Data Analysis and Preparation (EDA)：</strong>
+        <strong>Data Analysis and Preparation (EDA)：</strong><br>
         For the prediction model on Tweets, we used a dataset called “Truth Seeker 2023” from the Canadian Institute of Cybersecurity under University of New Brunswick. 
         This dataset was initially gathered on 180,000 tweets from 2016-2017, particularly about news and politics.
         （need more "method" for XGBoost）！！！
       </li>
       <li>
-        <strong>Model Selection and Baselines:</strong>
+        <strong>Model Selection and Baselines:</strong><br>
         To choose the best model, we explored logistic regression, XGBoost, Random Forest and BERT . 
         Finally，We choose BERT for tweets and XGBoost for news
         BERT is designed to understand natural language directly. Instead of depending on outside information, 
@@ -103,19 +103,19 @@
         
       </li>
       <li>
-        <strong>ChatGPT Prediction:</strong>
+        <strong>ChatGPT Prediction:</strong><br>
         We developed a  Python script and a specific prompt designed to query ChatGPT when a user inputs text. 
         The goal is to obtain an equivalent True or False prediction along with a confidence level. Unlike BERT and XGBoost, 
         which are directly trained on our  dataset,ChatGPT relies on its own general knowledge and language understanding.
       </li>
       <li>
-        <strong>API Development and Cloud Deployment:</strong>
+        <strong>API Development and Cloud Deployment:</strong><br>
         Framework: The prediction service is built using Python Flask.
         Model Integration: The API integrates and hosts all three core models: BERT, XGBoost, and the ChatGPT.
         We create Two distinct public routes to serve the models based on the prediction category.
         /predict: Returns the BERT prediction and the independent ChatGPT prediction.
         /predict_xgb: Returns the XGBoost prediction and the independent ChatGPT prediction.
-        To ensure reliable web access, including robust Cross-Origin Resource Sharing (CORS) allow requests from our GitHub Pages frontend
+        To ensure reliable web access, including robust Cross-Origin Resource Sharing (CORS) allow requests from our GitHub Pages frontend.
         Finally, the service is deployed to Amazon Web Services (AWS).We used AWS API Gateway,
         It takes the requests from the website and sends them to our running service, and then sends the prediction results back instantly.
       </li>   
@@ -179,7 +179,7 @@
 
   <!-- ======= Footer ======= -->
   <footer>
-    <p>© 2025 STA160 Project Demo | Built with ❤️ and GitHub Pages</p>
+    <p>© 2025 STA160 Group 2 Project | Built with ❤️ and GitHub Pages</p>
   </footer>
   <script>
   const API_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict";  
