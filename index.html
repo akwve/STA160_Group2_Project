@@ -9,8 +9,8 @@
 <body>
   <!-- ======= Header ======= -->
   <header>
-    <h1>Welcome to My STA160 Project</h1>
-    <p>Exploring statistical methods and insights through data visualization and analysis.</p>
+    <h1>Welcome to STA160 Group 2 Project</h1>
+    <p>Exploring statistical methods and machine learning models (BERT, XGBoost, ChatGPT) for real-time fake news detection.</p>
   </header>
 
   <!-- ======= Navigation ======= -->
@@ -39,7 +39,7 @@
    <section id="dashboard">
   <h2>Twitter Prediction</h2>
   <p style="text-align:center; color:#555;">
-  <p> Enter a tweet statement below. The backend on AWS will return predictions from our BERT model and from ChatGPT, so we can compare them.
+  <p> Enter a tweet statement below. The backend on AWS will return predictions from our BERT model and from ChatGPT.
   </p>
   
   <!-- BERT + ChatGPT -->
@@ -60,7 +60,7 @@
 <!-- XGBoost Section -->
   <h2>🧠 News Prediction</h2>
   <p style="text-align:center; color:#555;">
-  <p> Use the same or different text to test our XGBoost model below.
+  <p> Enter a News  URL below. The backend on AWS will return predictions from our XGBoost model and from ChatGPT.
   </p>
      
   <textarea id="xgb-input"
@@ -82,28 +82,42 @@
   <section id="methods">
     <h2>🧪 Methods</h2>
     <p>
-      Our analysis includes exploratory data analysis, modeling & feature engineering, and ChatGPT prompting.
-      Below is an overview of the workflow:
+      Our project uses multiple data，machine learning model and AI tools to accurately identify fake information. 
+      Here are the main steps and models we used:
     </p>
     
     <ol>
       <li>
-        <strong>Exploratory Data Analysis (EDA):</strong>
-        make visualizations of key variables to find basic trends in the data.
+        <strong>Data Analysis and Preparation (EDA)：</strong>
+        For the prediction model on Tweets, we used a dataset called “Truth Seeker 2023” from the Canadian Institute of Cybersecurity under University of New Brunswick. 
+        This dataset was initially gathered on 180,000 tweets from 2016-2017, particularly about news and politics.
+        （need more "method" for XGBoost）！！！
       </li>
       <li>
-        <strong>Basic Modeling &amp; Feature Engineering:</strong>
-        build simple baseline models to see what we might need to make accurate predictions, and
-        couple this with feature engineering.
+        <strong>Model Selection and Baselines:</strong>
+        To choose the best model, we explored logistic regression, XGBoost, Random Forest and BERT . 
+        Finally，We choose BERT for tweets and XGBoost for news
+        BERT is designed to understand natural language directly. Instead of depending on outside information, 
+        BERT reads the full text of each tweet and learns meaning from context, sentence structure, and the way ideas are expressed. 
+        （need more "method" for XGBoost）！！！
+        
       </li>
       <li>
-        <strong>Machine Learning Modeling &amp; Validation:</strong>
-        train and validate our main models (XGBoost &amp; BERT) to evaluate their performance.
+        <strong>ChatGPT Prediction:</strong>
+        We developed a  Python script and a specific prompt designed to query ChatGPT when a user inputs text. 
+        The goal is to obtain an equivalent True or False prediction along with a confidence level. Unlike BERT and XGBoost, 
+        which are directly trained on our  dataset,ChatGPT relies on its own general knowledge and language understanding.
       </li>
       <li>
-        <strong>ChatGPT Prompting:</strong>
-        design a prompt that runs in ChatGPT when input text is received, so that we can obtain an
-        equivalent True/False prediction for comparison with our models.
+        <strong>API Development and Cloud Deployment:</strong>
+        Framework: The prediction service is built using Python Flask.
+        Model Integration: The API integrates and hosts all three core models: BERT, XGBoost, and the ChatGPT.
+        We create Two distinct public routes to serve the models based on the prediction category.
+        /predict: Returns the BERT prediction and the independent ChatGPT prediction.
+        /predict_xgb: Returns the XGBoost prediction and the independent ChatGPT prediction.
+        To ensure reliable web access, including robust Cross-Origin Resource Sharing (CORS) allow requests from our GitHub Pages frontend
+        Finally, the service is deployed to Amazon Web Services (AWS).We used AWS API Gateway,
+        It takes the requests from the website and sends them to our running service, and then sends the prediction results back instantly.
       </li>   
     </ol>
   </section>
@@ -147,10 +161,6 @@
     </div>
   </section>
 
-
-<section id="team">
-  ...
-</section>
 
   <!-- ======= Team Section ======= -->
   <section id="team">
