@@ -82,25 +82,23 @@
   <section id="methods">
     <h2>🧪 Methods</h2>
     <p>
-      Our project uses multiple data，machine learning model and AI tools to accurately identify fake information. 
+      Our project uses multiple data sources, machine learning models, and AI tools to accurately identify fake information. 
       Here are the main steps and models we used:
     </p>
     
     <ol>
       <li>
         <strong>Data Analysis and Preparation (EDA)：</strong><br>
-        For the prediction model on Tweets, we used a dataset called “Truth Seeker 2023” from the Canadian Institute of Cybersecurity under University of New Brunswick. 
-        This dataset was initially gathered on 180,000 tweets from 2016-2017, particularly about news and politics.
-        （need more "method" for XGBoost）！！！
+        For the prediction model on Tweets, we used a dataset “Truth Seeker 2023” from the Canadian Institute of Cybersecurity under the University of New Brunswick. This dataset was initially gathered on 180,000 tweets from 2016-2017, particularly about news and politics.  
+        For the prediction model on news, we used the News Dataset (Kaggle Fake & Real News), which consists of ~45,000 news articles (23k fake, 21k real). We analyze the data characteristics to lead to further data cleaning, of making the subject column consistent, unifying letter case, tokenizing text, and removing common words. 
+
       </li>
       <li>
         <strong>Model Selection and Baselines:</strong><br>
-        To choose the best model, we explored logistic regression, XGBoost, Random Forest and BERT . 
-        Finally，We choose BERT for tweets and XGBoost for news
-        BERT is designed to understand natural language directly. Instead of depending on outside information, 
-        BERT reads the full text of each tweet and learns meaning from context, sentence structure, and the way ideas are expressed. 
-        （need more "method" for XGBoost）！！！
-        
+        To choose the best model, we explored logistic regression, XGBoost, Random Forest, and BERT. Finally, we chose BERT for tweets and XGBoost for news. <br>
+        BERT is designed to understand natural language directly. Instead of depending on outside information, BERT reads the full text of each tweet and learns meaning from context, sentence structure, and the way ideas are expressed. <br>
+        XGBoost consistently delivered the most reliable performance. While logistic regression and linear SVC also reached high accuracy, XGBoost showed a stronger ability to handle noisy text features, nonlinear relationships, and imbalanced subject distributions in the dataset and avoid overfitting.
+
       </li>
       <li>
         <strong>ChatGPT Prediction:</strong><br>
@@ -110,17 +108,72 @@
       </li>
       <li>
         <strong>API Development and Cloud Deployment:</strong><br>
-        Framework: The prediction service is built using Python Flask.
-        Model Integration: The API integrates and hosts all three core models: BERT, XGBoost, and the ChatGPT.
-        We create Two distinct public routes to serve the models based on the prediction category.
-        /predict: Returns the BERT prediction and the independent ChatGPT prediction.
-        /predict_xgb: Returns the XGBoost prediction and the independent ChatGPT prediction.
+        Framework: The prediction service is built using Python Flask.<br>
+        Model Integration: The API integrates and hosts all three core models: BERT, XGBoost, and the ChatGPT.<br>
+        We create Two distinct public routes to serve the models based on the prediction category.<br>
+        /predict: Returns the BERT prediction and the independent ChatGPT prediction.<br>
+        /predict_xgb: Returns the XGBoost prediction and the independent ChatGPT prediction.<br>
         To ensure reliable web access, including robust Cross-Origin Resource Sharing (CORS) allow requests from our GitHub Pages frontend.
         Finally, the service is deployed to Amazon Web Services (AWS).We used AWS API Gateway,
         It takes the requests from the website and sends them to our running service, and then sends the prediction results back instantly.
       </li>   
     </ol>
+      <!-- Horizontal Deployment Flow Diagram -->
+  <div class="deploy-flow">
+    <h3>🔁 Deployment Flow Overview</h3>
+    <div class="flow-line">
+      <div class="flow-step">
+        <div class="flow-title">1. User Dashboard</div>
+        <div class="flow-desc">User types tweet or news text on our GitHub Pages website.</div>
+      </div>
+      <div class="flow-arrow">➜</div>
+
+      <div class="flow-step">
+        <div class="flow-title">2. API Gateway</div>
+        <div class="flow-desc">Frontend sends a POST request to AWS API Gateway.</div>
+      </div>
+      <div class="flow-arrow">➜</div>
+
+      <div class="flow-step">
+        <div class="flow-title">3. EC2 + Flask</div>
+        <div class="flow-desc">Gateway forwards the request to our Flask service running on EC2.</div>
+      </div>
+      <div class="flow-arrow">➜</div>
+
+      <div class="flow-step">
+        <div class="flow-title">4. Models</div>
+        <div class="flow-desc">
+          Flask calls BERT or XGBoost and an independent ChatGPT-style predictor.
+        </div>
+      </div>
+      <div class="flow-arrow">➜</div>
+
+      <div class="flow-step">
+        <div class="flow-title">5. Response</div>
+        <div class="flow-desc">
+          Flask returns prediction + confidence, API Gateway sends JSON back to the dashboard.
+        </div>
+      </div>
+    </div>
+
+
+    <details class="flow-details">
+      <summary>Click for step-by-step explanation</summary>
+      <ol>
+        <li><strong>User Input:</strong> The user enters a tweet or news article in the dashboard textarea.</li>
+        <li><strong>HTTP Request:</strong> JavaScript sends a JSON POST request to AWS API Gateway
+            (<code>/predict</code> for BERT, <code>/predict_xgb</code> for XGBoost).</li>
+        <li><strong>Routing:</strong> API Gateway forwards the request to our Flask endpoint on the EC2 instance.</li>
+        <li><strong>Model Inference:</strong> Flask loads the saved model, runs the prediction, and computes a confidence score.</li>
+        <li><strong>Return JSON:</strong> Flask sends back a structured JSON response, which is returned by API Gateway.</li>
+        <li><strong>Dashboard Update:</strong> The frontend parses the JSON and displays the label, confidence, and ChatGPT-style output.</li>
+      </ol>
+    </details>
+  </div>
+
   </section>
+
+<
 
   <!-- ======= Results Section ======= -->
   <section id="results">
