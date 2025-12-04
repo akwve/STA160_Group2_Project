@@ -360,64 +360,63 @@ footer {
   color: #bfdbfe;
 }
 
-
-/* Methods Section */
+/* ===== Methods Section ===== */
 .methods-section {
-    margin-top: 60px;
-    padding: 20px 0;
+  margin-top: 60px;
+  padding: 20px 0 60px;
 }
 
 .methods-title {
-    font-size: 2rem;
-    margin-bottom: 10px;
-    color: #e5e7eb;
-    border-left: 6px solid #5fa8f0;
-    padding-left: 12px;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #e5e7eb;
+  border-left: 6px solid #5fa8f0;
+  padding-left: 12px;
 }
 
 .methods-intro {
-    color: #bfc6d1;
-    margin-bottom: 25px;
-    max-width: 800px;
+  color: #bfc6d1;
+  margin-bottom: 25px;
+  max-width: 800px;
 }
 
 /* Grid Layout */
 .methods-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 22px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 22px;
 }
 
 /* Card Style */
 .method-card {
-    background: rgba(30, 41, 59, 0.55);
-    border: 1px solid rgba(148, 163, 184, 0.25);
-    padding: 22px;
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  background: rgba(30, 41, 59, 0.55);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+  padding: 22px;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .method-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
 }
 
 /* Icon */
 .method-icon {
-    font-size: 2rem;
-    margin-bottom: 10px;
+  font-size: 2rem;
+  margin-bottom: 10px;
 }
 
 /* Titles */
 .method-card h3 {
-    font-size: 1.2rem;
-    margin-bottom: 8px;
-    color: #e5e7eb;
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #e5e7eb;
 }
 
 /* Text */
 .method-card p {
-    color: #c7d0db;
-    line-height: 1.5rem;
+  color: #c7d0db;
+  line-height: 1.5rem;
 }
