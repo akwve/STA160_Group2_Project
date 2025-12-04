@@ -314,15 +314,20 @@ footer {
 
 
 .flow-step {
-  min-width: 180px;
-  max-width: 220px;
-  padding: 12px 14px;
-  border-radius: 12px;
-  background: rgba(15, 23, 42, 0.85);
-  border: 1px solid rgba(148, 163, 184, 0.4);
-  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.7);
-}
+    width: 220px;
+    height: 220px;
 
+    padding: 12px 14px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden;
+}
 
 .flow-title {
   font-weight: 600;
@@ -390,12 +395,19 @@ footer {
 
 /* Card Style */
 .method-card {
+    width: 260px;   
+    height: 260px;  
     background: rgba(30, 41, 59, 0.55);
     border: 1px solid rgba(148, 163, 184, 0.25);
     padding: 22px;
     border-radius: 14px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    overflow: hidden; 
 }
 
 .method-card:hover {
