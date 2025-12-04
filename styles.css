@@ -356,24 +356,20 @@ footer {
 }
 
 
-
 .method-card {
-  background: rgba(30, 41, 59, 0.55);
-  width: 260px;
-  height: 260px;
-  flex-grow: 1;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  padding-right: 8px;
-  border: 1px solid rgba(148, 163, 184, 0.25);
-  padding: 22px;
-  border-radius: 14px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
+    background: rgba(30, 41, 59, 0.55);
+    height: 280px; 
+    display: flex;      
+    flex-direction: column;
+    
+    overflow: hidden;
 
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    padding: 22px;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
 .method-card:hover {
   transform: translateY(-4px);
   box-shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
@@ -394,6 +390,9 @@ footer {
   color: #c7d0db;
   line-height: 1.5rem;
   font-size: 0.9rem;
+  flex-grow: 1;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 /* ===== DEPLOYMENT FLOW SECTION ===== */
