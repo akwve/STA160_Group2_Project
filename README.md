@@ -14,7 +14,7 @@ Users can input news or tweet text, and the system returns predictions from each
 ## Team Members  
 
 - **Liam Sullivan** (Statistics)  - Prediction Model News
-- **Thy Pham*** (Statistics)  - Prediction Model Twitter
+- **Thy Pham** (Statistics)  - Prediction Model Twitter
 - **Ayaka Suganuma** (Statistics)  - Prediction Model News
 - **Maxwell Burns** (Statistics)  - Prediction Model Twitter
 - **Han Zhou** (Applied Statistics)  - Dashboard
