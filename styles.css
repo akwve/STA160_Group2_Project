@@ -3,35 +3,25 @@ body {
   margin: 0;
   padding: 0;
 
-
-  background: radial-gradient(circle at top, #091021 0%, #313974 55%, #00184b 100%);
-  background-size: 200% 200%;          
-
-
-  animation: pageFadeIn 0.3s ease-in-out forwards;
+  background: radial-gradient(circle at top, #091432 0%, #303a89 55%, #00184b 100%);
+  background-size: cover;
 
   color: #e4e9ff;
   line-height: 1.6;
 
   opacity: 0;
-  transform: translateY(8px);
+  animation: bodyFade 1s ease-out forwards;
 }
 
-@keyframes pageFadeIn {
+
+@keyframes bodyFade {
+  from {
+    opacity: 0;
+    transform: translateY(2px); 
+  }
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-body.is-exiting {
-  animation: pageFadeOut 0.10s ease-in forwards;
-}
-
-@keyframes pageFadeOut {
-  to {
-    opacity: 0;
-    transform: translateY(-4px);
   }
 }
 
