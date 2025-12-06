@@ -460,6 +460,36 @@ footer {
   color: #bfdbfe;
 }
 
+
+
+/* ===== RESULT SECTION ===== */
+.result-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.result-block {
+    margin-top: 0;  
+    margin-bottom: 10px;
+}
+
+.img-row {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.img-row img {
+    width: 48%;
+    border-radius: 6px;
+}
+
+.result-desc {
+    margin-top: 10px;
+    line-height: 1.6;
+}
+
 /* ===== DEPLOYMENT FLOW SECTION（phone） ===== */
 @media (max-width: 768px) {
   .flow-line {
@@ -492,33 +522,4 @@ footer {
     margin: 4px 0;
     transform: rotate(90deg);  
   }
-}
-
-
-/* ===== RESULT SECTION ===== */
-.result-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-}
-
-.result-block {
-    margin-top: 0;  
-    margin-bottom: 10px;
-}
-
-.img-row {
-    display: flex;
-    gap: 20px;
-    justify-content: flex-start;
-}
-
-.img-row img {
-    width: 48%;
-    border-radius: 6px;
-}
-
-.result-desc {
-    margin-top: 10px;
-    line-height: 1.6;
 }
