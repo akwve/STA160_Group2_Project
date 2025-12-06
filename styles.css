@@ -4,18 +4,17 @@ body {
   padding: 0;
 
 
-  background: radial-gradient(circle at top, #091021 0%, #2d3362 55%, #010a1e 100%);
+  background: radial-gradient(circle at top, #091021 0%, #313974 55%, #00184b 100%);
   background-size: 200% 200%;          
 
 
-  animation: bgMove 3s ease infinite,
-  pageFadeIn 0.1s ease-in-out forwards;
+  animation: pageFadeIn 0.3s ease-in-out forwards;
 
   color: #e4e9ff;
   line-height: 1.6;
 
   opacity: 0;
-  transform: translateY(4px);
+  transform: translateY(8px);
 }
 
 @keyframes pageFadeIn {
@@ -26,7 +25,7 @@ body {
 }
 
 body.is-exiting {
-  animation: pageFadeOut 0.05s ease-in forwards;
+  animation: pageFadeOut 0.10s ease-in forwards;
 }
 
 @keyframes pageFadeOut {
@@ -36,11 +35,6 @@ body.is-exiting {
   }
 }
 
-@keyframes bgMove {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
 .brand-name {
     font-size: 5rem;
     font-weight: 700;
