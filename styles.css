@@ -1,5 +1,5 @@
 html {
-  background-color: #050816; 
+  background-color: #050816;   
 }
 body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
@@ -94,8 +94,49 @@ nav a:hover {
 }
 
 
+.main-nav {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;          
+  flex-wrap: wrap;    
+}
+
+@media (max-width: 768px) {
+
+  .top-bar {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1.25rem 1rem;
+  }
+
+  .brand-name {
+    font-size: 2.6rem;     
+    text-align: center;
+  }
 
 
+  .main-nav {
+    gap: 1.5rem;
+    font-size: 0.9rem;
+  }
+
+  .nav-link {
+    padding: 0.25rem 0;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .brand-name {
+    font-size: 2.2rem;
+  }
+
+  .main-nav {
+    gap: 1rem;
+    font-size: 0.85rem;
+  }
+}
 section {
   max-width: 980px;
   margin: 32px auto;
