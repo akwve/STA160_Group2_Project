@@ -413,7 +413,6 @@ footer {
     -webkit-overflow-scrolling: touch; 
 }
 .flow-step {
-  width: 250px;
   height: 130px;
   padding: 12px 14px;
   border-radius: 12px;
