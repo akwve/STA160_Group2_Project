@@ -1,4 +1,5 @@
-# Web scraping functions
+## Combining web scraping and text cleaning functions into a python file for the purpose that they can be imported easily
+
 import requests
 from bs4 import BeautifulSoup
 import re
@@ -25,6 +26,7 @@ try:
 except LookupError:
     nltk.download('wordnet')
 
+# Text cleaning and tokenization function
 def clean_content(text):
     text = str(text).strip().lower()
     tokens = word_tokenize(text)
@@ -34,20 +36,7 @@ def clean_content(text):
     lemmatized = [lemmatizer.lemmatize(token) for token in tokens]
     return ' '.join(lemmatized)
 
-def wayback_fetch(url, headers):
-    """Try to fetch the closest archived snapshot from the Wayback Machine."""
-    api = f"https://archive.org/wayback/available?url={quote(url)}"
-    r = requests.get(api, headers=headers, timeout=10)
-    r.raise_for_status()
-    data = r.json()
-    snap = data.get("archived_snapshots", {}).get("closest")
-    if not snap or not snap.get("available"):
-        raise requests.exceptions.RequestException("No archived snapshot available")
-    snapshot_url = snap.get("url")
-    rs = requests.get(snapshot_url, headers=headers, timeout=15)
-    rs.raise_for_status()
-    return BeautifulSoup(rs.text, "html.parser")
-
+# Web scraping functions
 def scrape_article(url):
     headers = {
         "User-Agent": (
@@ -121,6 +110,23 @@ def scrape_article(url):
     body_text = "\n".join(p.get_text(strip=True) for p in paragraphs)
     return title, clean_text(body_text)
 
+# Web fetching function
+#  fetch from archived version if live page is not accessible
+def wayback_fetch(url, headers):
+    """Try to fetch the closest archived snapshot from the Wayback Machine."""
+    api = f"https://archive.org/wayback/available?url={quote(url)}"
+    r = requests.get(api, headers=headers, timeout=10)
+    r.raise_for_status()
+    data = r.json()
+    snap = data.get("archived_snapshots", {}).get("closest")
+    if not snap or not snap.get("available"):
+        raise requests.exceptions.RequestException("No archived snapshot available")
+    snapshot_url = snap.get("url")
+    rs = requests.get(snapshot_url, headers=headers, timeout=15)
+    rs.raise_for_status()
+    return BeautifulSoup(rs.text, "html.parser")
+
+# Text cleaning functions to remove words common on websites 
 def clean_text(text):
     """Remove irrelevant or boilerplate lines commonly found in news sites."""
     bad_phrases = [
@@ -149,6 +155,8 @@ def clean_text(text):
 
     return "\n".join(cleaned_lines)
 
+# Combined all function to scrape and clean article
+# call to conduct full process
 def scrape_and_clean_article(url):
     """Main function to scrape and clean article from URL."""
     title, body = scrape_article(url)
