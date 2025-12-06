@@ -240,7 +240,7 @@ textarea {
 
 textarea:focus {
     outline: none;
-    border: 1px solid #60a5fa; /* focus 时发蓝光 */
+    border: 1px solid #60a5fa; 
     box-shadow: 0 0 8px #60a5fa55;
 }
 .result-box {
@@ -398,6 +398,7 @@ footer {
 /* ===== DEPLOYMENT FLOW SECTION ===== */
 
 .deploy-section {
+  padding: 0 32px 40px
   
 }
 
@@ -491,7 +492,7 @@ footer {
 }
 
 /* ===== DEPLOYMENT FLOW SECTION（phone） ===== */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .flow-line {
     flex-direction: column;
     align-items: stretch;
@@ -501,9 +502,10 @@ footer {
 
 
   .flow-step {
-    width: 100%;
+    width: 90%;
     height: auto;
     padding: 12px 16px;
+
   }
 
 
