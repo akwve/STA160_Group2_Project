@@ -203,18 +203,50 @@
     <h2>📊 Results & Visualizations</h2>
 
   
-    <h3>Sample Plot</h3>
-      <img src="BERT%20Score%20histogram.png" width="600" alt="BERT Score histogram">
-      <h3>BERT ChatGPT Score Distribution</h3>
-      <img src="BERT%20chat%20Histogram.png" width="600" alt="BERT ChatGPT score histogram">
+  <section id="results">
+    <h2>📊 Results & Visualizations</h2>
 
-      <h3>XGBoost Confidence Level</h3>
-      <img src="XGBoost%20CL.png" width="600" alt="XGBoost confidence level">
+    <div class="result-grid">
 
-      <h3>XGBoost Model Comparison</h3>
-      <img src="XGBoost%20comparison.png" width="600" alt="XGBoost model comparison">
- 
+        <!-- ===== BERT Section ===== -->
+        <div class="result-block">
+            <h3>BERT Score Distribution</h3>
+
+            <div class="img-row">
+                <img src="BERT%20Score%20histogram.png" alt="BERT Score" />
+                <img src="BERT%20chat%20Histogram.png" alt="BERT ChatGPT Score" />
+            </div>
+
+            <p class="result-desc">
+                To compare the two systems, we ran approximately 200 randomly selected tweets from the NYC mayoral election through both our fine-tuned BERT model and a standardized ChatGPT prompt, 
+                collecting the predicted label and confidence score for each model. On average, ChatGPT found the tweets to be about 20% less true.
+                BERT continued to be the stronger strict classifier. Its predictions were consistent and usually high in confidence, 
+                reflecting how it was trained—directly on labeled truth data using only the text. As we saw in the previous plots, 
+                BERT produced very confident, mostly binary predictions, whereas ChatGPT’s scores were more moderate and varied. 
+            </p>
+        </div>
+
+        <!-- ===== XGBoost Section ===== -->
+        <div class="result-block">
+            <h3>XGBoost Confidence Comparison</h3>
+
+            <div class="img-row">
+                <img src="XGBoost%20CL.png" alt="XGBoost Confidence" />
+                <img src="XGBoost%20comparison.png" alt="XGBoost Comparison" />
+            </div>
+
+            <p class="result-desc">
+                When testing our XBG boost model vs ChatGPT, we subset a random sample of 200 data points from the original data and compared the results with ChatGPT
+                we have to admit that this accuracy does tend to drop once we start leaving data involved in the 2016 election sphere. When inputting more current data, the model is skewed, labeling it as Fake news much more often than Real. 
+            </p>
+        </div>
+
     </div>
+</section>
+
+
+</div>
+
 
 
 
