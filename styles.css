@@ -458,3 +458,30 @@ footer {
 .flow-details summary:hover {
   color: #bfdbfe;
 }
+
+
+.result-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.result-block {
+    margin-bottom: 40px;
+}
+
+.img-row {
+    display: flex;
+    gap: 20px;
+    justify-content: flex-start;
+}
+
+.img-row img {
+    width: 48%;
+    border-radius: 6px;
+}
+
+.result-desc {
+    margin-top: 15px;
+    line-height: 1.6;
+}
