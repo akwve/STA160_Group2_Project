@@ -49,7 +49,7 @@
 
   <div id="predict-result"class="result-box"></div>
 <!-- XGBoost Section -->
-  <h2>🧠 News Prediction</h2>
+  <h2>News Prediction</h2>
   <p style="text-align:center; color:#555;">
   <p> Enter a News  URL below. The backend on AWS will return predictions from our XGBoost model and from ChatGPT.
   </p>
@@ -158,5 +158,28 @@
 <footer>
     <p>© 2025 STA160 Group 2 Project | Built with ❤️ and GitHub Pages</p>
   </footer>
+
+   <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      const url = link.getAttribute("href");
+
+
+      if (!url || url.startsWith("http")) return;
+
+      e.preventDefault();
+      document.body.classList.add("is-exiting");
+
+      
+      setTimeout(() => {
+        window.location.href = url;
+      }, 150); 
+    });
+  });
+});
+</script>
 </body>
 </html>

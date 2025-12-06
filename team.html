@@ -26,16 +26,50 @@
 </header>
 
 <!-- ======= Team Section ======= -->
-  <section id="team">
-    <h2>👩‍🔬 Team Members</h2>
+<section id="team">
+    <h2>👥 Team Members</h2>
+
     <div class="team">
-      <div class="member">
-        <h4>Group Number</h4>
-        <p>Group 2</p>
-      </div>
-      <div class="member">
-        <h4>Team Members</h4>
-        <p>Thy Pham<br> Ayaka Suganuma<br> Maxwell Burns<br> Liam Sullivan<br> Han Zhou</p>
-      </div>
+
+            <h4>Project Roles</h4>
+            <ul>
+                <li><strong>Liam Sullivan</strong> (Statistics) – News Prediction Model</li>
+                <li><strong>Thy Pham</strong> (Statistics) – Twitter Prediction Model</li>
+                <li><strong>Ayaka Suganuma</strong> (Statistics) – News Prediction Model</li>
+                <li><strong>Maxwell Burns</strong> (Statistics) – Twitter Prediction Model</li>
+                <li><strong>Han Zhou</strong> (Applied Statistics) – Dashboard, Front-end & Website Design</li>
+            </ul>
+        </div>
+
+    
     </div>
-  </section>
+</section>
+
+
+
+
+   <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const navLinks = document.querySelectorAll(".nav-link");
+
+  navLinks.forEach(link => {
+    link.addEventListener("click", (e) => {
+      const url = link.getAttribute("href");
+
+
+      if (!url || url.startsWith("http")) return;
+
+      e.preventDefault();
+      document.body.classList.add("is-exiting");
+
+      
+      setTimeout(() => {
+        window.location.href = url;
+      }, 150); 
+    });
+  });
+});
+</script>
+
+</body>
+</html>

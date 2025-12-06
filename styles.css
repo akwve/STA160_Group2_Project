@@ -2,16 +2,51 @@ body {
   font-family: "Inter", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background: radial-gradient(circle at top, #1f2a3a 0%, #050712 55%, #000000 100%);
+
+
+  background: radial-gradient(circle at top, #091021 0%, #2d3362 55%, #010a1e 100%);
+  background-size: 200% 200%;          
+
+
+  animation: bgMove 3s ease infinite,
+  pageFadeIn 0.3s ease-in-out forwards;
+
   color: #e4e9ff;
   line-height: 1.6;
+
+  opacity: 0;
+  transform: translateY(8px);
 }
 
+@keyframes pageFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body.is-exiting {
+  animation: pageFadeOut 0.15s ease-in forwards;
+}
+
+@keyframes pageFadeOut {
+  to {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@keyframes bgMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 .brand-name {
-    font-size: 4rem;
+    font-size: 5rem;
     font-weight: 700;
     letter-spacing: 0.5px;
 }
+
 
 
 header {
@@ -63,6 +98,17 @@ nav a:hover {
   box-shadow: 0 0 12px rgba(56, 189, 248, 0.6);
   background: radial-gradient(circle at top, rgba(15, 23, 42, 0.95), rgba(8, 47, 73, 0.85));
 }
+
+.nav-link {
+    transition: transform 0.15s ease;
+}
+
+.nav-link:active {
+    transform: scale(1.12);
+}
+
+
+
 
 section {
   max-width: 980px;
@@ -551,13 +597,3 @@ footer {
   font-size: 1.05rem;
 }
 
-.chart-card {
-  background: #111827;
-  border-radius: 16px;
-  padding: 20px;
-  margin-bottom: 24px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-.chart-card h2 {
-  margin-bottom: 12px;
-}
