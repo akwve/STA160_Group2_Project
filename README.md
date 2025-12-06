@@ -1,17 +1,17 @@
 # STA160_Group2_Project
 Group Project for STA 160 Fall 2025 <br />
-## 🔗 Project Links  
+## Project Links  
 [Project Plan](https://docs.google.com/document/d/1Mi_r0kWk4T7W5OTuVgY2i3bZpw0nsUaYYdX0TjwR1bs/edit?usp=sharing) <br />
 [GitHub Page](https://akwve.github.io/STA160_Group2_Project/) <br />
 
-## 📘 Overview  
+## Overview  
 This project builds a Fake News Detection system using **BERT**, **XGBoost**, and a **ChatGPT-based predictor**.  
 We developed an interactive dashboard on GitHub Pages and a backend Flask API deployed on **AWS EC2 + API Gateway**. <br />
 
 Users can input news or tweet text, and the system returns predictions from each model, along with confidence distributions and performance visualizations. <br />
 
 ---
-## 👥 Team Members  
+## Team Members  
 
 - **Liam Sullivan** (Statistics)  - Prediction Model News
 - **Thy Pham*** (Statistics)  - Prediction Model Twitter
