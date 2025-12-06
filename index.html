@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>STA160 Project Demo</title>
-  <link rel="stylesheet" href="styles.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fake News Detector – STA160 Group 2</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
-  <!-- ======= Header ======= -->
-  <header>
-    <h1>Welcome to STA160 Group 2 Project</h1>
-    <p>Exploring statistical methods and machine learning models (BERT, XGBoost, ChatGPT) for real-time fake news detection.</p>
-  </header>
+<!-- ================= Header Navigation ================= -->
+<header class="top-bar">
+    <div class="brand">
+        <span class="brand-icon"></span>
+        <span class="brand-name">Fake News Detector</span>
+    </div>
 
-  <!-- ======= Navigation ======= -->
-  <nav>
-    <a href="#about">About</a>
-    <a href="#dashboard">Dashboard</a>
-    <a href="#methods">Methods</a>
-    <a href="#results">Results</a>
-    <a href="#team">Team</a>
-  </nav>
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link active">About</a>
+        <a href="dashboard.html" class="nav-link">prediction</a>
+        <a href="methods.html" class="nav-link">Methods</a>
+        <a href="results.html" class="nav-link">Results</a>
+        <a href="team.html" class="nav-link">Team</a>
+    </nav>
 
-  <!-- ======= About Section ======= -->
-  <section id="about">
-    <h2>📌 About the Project</h2>
+</header>
+
+
+<!-- ================= About Section ================= -->
+<section id="about" class="content-section">
+    <h2>About the Project</h2>
+
     <p>
       This project was created as a part of the class, STA160, to demonstrate statistical analysis, model building, 
       and front to back end pipeline. We used 2 machine learning models to predict whether or not a news article or 
@@ -33,325 +38,63 @@
       prediction as well as ChatGPT’s. From there, the user can make a more educated decision about whether to trust 
       what they’ve read online.
     </p>
-  </section>
-
-   <!-- ======= Dashboard Section ======= -->
-   <section id="dashboard">
-  <h2>Twitter Prediction</h2>
-  <p style="text-align:center; color:#555;">
-  <p> Enter a tweet statement below. The backend on AWS will return predictions from our BERT model and from ChatGPT.
-  </p>
-  
-  <!-- BERT + ChatGPT -->
-  <label for="input-text"><strong>Input text</strong></label><br />
-  <textarea id="input-text"
-    rows="6"
-    style="width: 90%; max-width: 1000px"
-    placeholder="Enter text for BERT/ChatGPT prediction..."
-  ></textarea>
-  <br />
-  <button
-    id="predict-btn"
-    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">
-    Predict
-  </button>    
-
-  <div id="predict-result"class="result-box"></div>
-<!-- XGBoost Section -->
-  <h2>🧠 News Prediction</h2>
-  <p style="text-align:center; color:#555;">
-  <p> Enter a News  URL below. The backend on AWS will return predictions from our XGBoost model and from ChatGPT.
-  </p>
-    
-  <label for="input-text"><strong>Input URL</strong></label><br />
-  <textarea id="xgb-input"
-    rows="6"
-    style="width: 90%; max-width: 1000px"
-    placeholder="Enter text for XGBoost prediction..."
-  ></textarea>
-  <br />
-  <button
-    id="xgb-btn"
-    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">
-    Predict (XGBoost)
-  </button>
-
-  <div id="xgb-result" class="result-box"></div>
 </section>
 
-  <!-- ======= Methods Section ======= -->
-    
-  <section id="methods" class="methods-section">
-    <h2 class="methods-title">🧩 Methods Overview</h2>
-    <p class="methods-intro">
-      Our project uses multiple data sources, machine learning models, and AI tools to accurately identify fake information. 
-      Here are the main steps and models we used:
+
+<!-- ================= About Content ================= -->
+<section class="content-section">
+
+    <h2>Project Motivation</h2>
+    <p>
+       With the current political climate and information arms race between the left and right, the question of truth in online information is often overlooked. 
+       <br>Some may be inclined to believe the average American gets their news from established sources with regulations on what they can claim, but, in fact, one out of five Americans says they regularly get news from news influencers on social media (Stocking, et. al). 
+       <br>Furthermore, 23%--almost a quarter–of people report sharing a made-up news story with and without their knowledge (Barthell, et. al).
+
+       <br>Our goal is to build a fully functional machine learning pipeline that helps users 
+        assess the credibility of online content — whether from tweets, blogs, or news articles.
     </p>
-    
-    <div class="methods-grid">
-
-      <!-- Card 1 -->
-        <div class="method-card">
-            <div class="method-icon"></div>
-            <h3>1. Data Analysis & Preparation (EDA)</h3>
-            <p>
-                For the prediction model on Tweets, we used a dataset “Truth Seeker 2023” from the Canadian Institute of Cybersecurity under the University of New Brunswick. 
-                This dataset was initially gathered on 180,000 tweets from 2016-2017, particularly about news and politics.  
-                For the prediction model on news, we used the News Dataset (Kaggle Fake & Real News), which consists of ~45,000 news articles (23k fake, 21k real). 
-                We analyze the data characteristics to lead to further data cleaning, of making the subject column consistent, unifying letter case, tokenizing text, and removing common words. 
-            </p>
-        </div>
-
-      <!-- Card 2 -->
-        <div class="method-card">
-            <div class="method-icon"></div>
-            <h3>2. Model Selection & Baselines</h3>
-            <p>
-                We explored logistic regression, Random Forest, XGBoost, and BERT.  
-                BERT was chosen for tweets because it natural language directly.
-                It reads the full text of each tweet and learns meaning from context, sentence structure, and the way ideas are expressed. 
-                XGBoost was chosen for news because it performed most reliably with noisy text, nonlinear patterns,  
-                and imbalanced subject distributions.
-            </p>
-        </div>
-
-      <!-- Card 3 -->
-        <div class="method-card">
-            <div class="method-icon"></div>
-            <h3>3. ChatGPT Prediction</h3>
-            <p>
-                We developed a  Python script and a specific prompt designed to query ChatGPT when a user inputs text. 
-                ChatGPT provides an additional True/False prediction and confidence score based on its general language knowledge.
-            </p>
-        </div>
-
-      <!-- Card 4 -->
-        <div class="method-card">
-            <div class="method-icon"></div>
-            <h3>4. API & Cloud Deployment</h3>
-            <p>
-                Framework: The prediction service is built using Python Flask.
-                Model Integration: The API integrates and hosts all three core models: BERT, XGBoost, and the ChatGPT. 
-                AWS API Gateway forwards requests from our GitHub Pages website to our EC2 instance, 
-                To ensure reliable web access, including robust Cross-Origin Resource Sharing (CORS) allow requests from our GitHub Pages frontend. 
-                and returns structured JSON results instantly.
-            </p>
-        </div>
-
-   </section>
-   
 
 
+    <h2>What Our System Does</h2>
+    <p>
+        This project classifies text into Real or Fake using two models:
+    </p>
 
-      <!-- Horizontal Deployment Flow Diagram -->
-  <section class="deploy-section">
-    <h3>🔁 Deployment Flow Overview</h3>
-    <div class="flow-line">
-      <div class="flow-step">
-        <div class="flow-title">1. User Dashboard</div>
-        <div class="flow-desc">User types tweet or news on our GitHub Pages website.</div>
-      </div>
-      <div class="flow-arrow">➜</div>
+    <ul>
+        <li><strong>BERT</strong> – For Twitter Prediction</li>
+        <li><strong>XGBoost</strong> – For News Prediction</li>
+    </ul>
 
-      <div class="flow-step">
-        <div class="flow-title">2. API Gateway</div>
-        <div class="flow-desc">Frontend sends a POST request to AWS API Gateway.</div>
-      </div>
-      <div class="flow-arrow">➜</div>
-
-      <div class="flow-step">
-        <div class="flow-title">3. EC2 + Flask</div>
-        <div class="flow-desc">Gateway forwards the request to our Flask service running on EC2.</div>
-      </div>
-      <div class="flow-arrow">➜</div>
-
-      <div class="flow-step">
-        <div class="flow-title">4. Models</div>
-        <div class="flow-desc">
-          Flask calls BERT or XGBoost and an independent ChatGPT predictor.
-        </div>
-      </div>
-      <div class="flow-arrow">➜</div>
-
-      <div class="flow-step">
-        <div class="flow-title">5. Response</div>
-        <div class="flow-desc">
-          Flask returns prediction, API Gateway sends JSON back to the dashboard.
-        </div>
-      </div>
-    </div>
+    <p>
+        To extend the analysis, we also integrate <strong>ChatGPT</strong> as an independent predictor.  
+        This allows us to compare traditional ML models with modern LLM-based reasoning.
+    </p>
 
 
-    <details class="flow-details">
-      <summary>Click for step-by-step explanation</summary>
-      <ol>
-        <li><strong>User Input:</strong> The user enters a tweet or news article in the dashboard textarea.</li>
-        <li><strong>HTTP Request:</strong> JavaScript sends a JSON POST request to AWS API Gateway</li>
-        <li><strong>Routing:</strong> API Gateway forwards the request to our Flask endpoint on the EC2 instance.</li>
-        <li><strong>Run the Models:</strong> The server reads your text and uses our trained models (BERT / XGBoost) plus a ChatGPT predictor to detect whether it looks real or fake</li>
-        <li><strong>Get the Result:</strong> The server sends back a clean, structured answer with the prediction and a confidence score.</li>
-        <li><strong>Dashboard Update:</strong> Our website displays the result for you — including the label, confidence, and the ChatGPT-style explanation.</li>
-      </ol>
-    </details>
-  </div>
+    <h2>How Users Interact With the System</h2>
+    <p>
+        Through our dashboard, users can:
+    </p>
 
-  </section>
+    <ul>
+        <li>Paste a tweet text</li>
+        <li>Enter a news URL </li>
+        <li>Receive predictions from all three models</li>
+        <li>Compare outputs across ML and AI methods</li>
+    </ul>
 
 
-  <!-- ======= Results Section ======= -->
-  <section id="results">
-    <h2>📊 Results & Visualizations</h2>
+    <h2>Course</h2>
+    <p>
+        This project was created for <strong>STA160 – Fall 2025</strong> at UC Davis, as a demonstration 
+        of real-world machine learning workflows, cloud deployment, and web dashboard visualization.  
+    </p>
 
-    <div class="result-grid">
-
-        <!-- ===== BERT Section ===== -->
-        <div class="result-block">
-            <h3>BERT Score Distribution</h3>
-
-            <div class="img-row">
-                <img src="BERT%20Score%20histogram.png" alt="BERT Score" />
-                <img src="BERT%20chat%20Histogram.png" alt="BERT ChatGPT Score" />
-            </div>
-
-            <p class="result-desc">
-                To compare the two systems, we ran approximately 200 randomly selected tweets from the NYC mayoral election through both our fine-tuned BERT model and a standardized ChatGPT prompt, 
-                collecting the predicted label and confidence score for each model. On average, ChatGPT found the tweets to be about 20% less true.
-                BERT continued to be the stronger strict classifier. Its predictions were consistent and usually high in confidence, 
-                reflecting how it was trained—directly on labeled truth data using only the text. As we saw in the previous plots, 
-                BERT produced very confident, mostly binary predictions, whereas ChatGPT’s scores were more moderate and varied. 
-            </p>
-        </div>
-        <!-- ===== XGBoost Section ===== -->
-        <div class="result-block">
-            <h3>XGBoost Confidence Comparison</h3>
-
-            <div class="img-row">
-                <img src="XGBoost%20CL.png"   alt="XGBoost Confidence" />
-                <img src="XGBoost%20comparison.png" alt="XGBoost Comparison" />
-            </div>
-
-            <p class="result-desc">
-                When testing our XBG boost model vs ChatGPT, we subset a random sample of 200 data points from the original data and compared the results with ChatGPT
-                we have to admit that this accuracy does tend to drop once we start leaving data involved in the 2016 election sphere. When inputting more current data, the model is skewed, labeling it as Fake news much more often than Real. 
-            </p>
-        </div>
-
-    </div>
 </section>
 
-
-</div>
-
-
-
-
-
-  </section>
-
-
-  <!-- ======= Team Section ======= -->
-  <section id="team">
-    <h2>👩‍🔬 Team Members</h2>
-    <div class="team">
-      <div class="member">
-        <h4>Group Number</h4>
-        <p>Group 2</p>
-      </div>
-      <div class="member">
-        <h4>Team Members</h4>
-        <p>Thy Pham<br> Ayaka Suganuma<br> Maxwell Burns<br> Liam Sullivan<br> Han Zhou</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======= Footer ======= -->
-  <footer>
+<footer>
     <p>© 2025 STA160 Group 2 Project | Built with ❤️ and GitHub Pages</p>
   </footer>
-  <script>
-  const API_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict";  
 
-  const btn = document.getElementById("predict-btn");
-  const input = document.getElementById("input-text");
-  const resultDiv = document.getElementById("predict-result");
-
-  btn.addEventListener("click", async () => {
-    const text = input.value.trim();
-    if (!text) {
-      resultDiv.textContent = "⚠️ Please enter some text.";
-      return;
-    }
-
-    btn.disabled = true;
-    resultDiv.textContent = "⏳ Predicting...";
-
-    try {
-      const res = await fetch(API_URL, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text })
-      });
-      
-      const data = await res.json();
-
-
-      resultDiv.textContent =
-        `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
-        `ChatGPT: ${data.gpt_label}`;
-    } catch (err) {
-      console.error(err);
-      resultDiv.textContent = "❌ Error: " + err.message;
-    } finally {
-      btn.disabled = false;
-    }
-  });
-</script>
-  
-<script>
-  
-  const XGB_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict_xgb";
-
-  const xgbBtn   = document.getElementById("xgb-btn");
-  const xgbInput = document.getElementById("xgb-input");
-  const xgbOut   = document.getElementById("xgb-result");
-
-  xgbBtn.addEventListener("click", async () => {
-    const text = xgbInput.value.trim();
-    if (!text) {
-      xgbOut.textContent = "⚠️ Please enter some text.";
-      return;
-    }
-
-    xgbBtn.disabled = true;
-    xgbOut.textContent = "⏳ Predicting (XGBoost)...";
-
-    try {
-      const res = await fetch(XGB_URL, {
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text })
-      });
-
-      if (!res.ok) {
-        const t = await res.text();
-        throw new Error(`HTTP ${res.status} — ${t.slice(0,150)}`);
-      }
-
-      const data = await res.json(); // { xgb_label, xgb_confidence }
-      const conf = (data.xgb_confidence == null) ? "n/a" : data.xgb_confidence;
-      const gptLabel = data.gpt_label || "N/A"; //
-      
-      xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})\n` + 
-      `ChatGPT: ${gptLabel}`;
-    } catch (err) {
-      console.error(err);
-      xgbOut.textContent = "❌ " + err.message;
-    } finally {
-      xgbBtn.disabled = false;
-    }
-  });
-</script>
 </body>
 </html>

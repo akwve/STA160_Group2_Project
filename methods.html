@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fake News Detector – STA160 Group 2</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+<!-- ================= Header Navigation ================= -->
+<header class="top-bar">
+    <div class="brand">
+        <span class="brand-icon"></span>
+        <span class="brand-name">Fake News Detector</span>
+    </div>
+
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link active">About</a>
+        <a href="dashboard.html" class="nav-link">prediction</a>
+        <a href="methods.html" class="nav-link">Methods</a>
+        <a href="results.html" class="nav-link">Results</a>
+        <a href="team.html" class="nav-link">Team</a>
+    </nav>
+
+</header>
+
+<!-- ======= Methods Section ======= -->
+    
+  <section id="methods" class="methods-section">
+    <h2 class="methods-title"> Methods Overview</h2>
+    <p class="methods-intro">
+      Our project uses multiple data sources, machine learning models, and AI tools to accurately identify fake information. 
+      Here are the main steps and models we used:
+    </p>
+    
+    <div class="methods-grid">
+
+      <!-- Card 1 -->
+        <div class="method-card">
+            <div class="method-icon"></div>
+            <h3>1. Data Analysis & Preparation (EDA)</h3>
+            <p>
+                For the prediction model on Tweets, we used a dataset “Truth Seeker 2023” from the Canadian Institute of Cybersecurity under the University of New Brunswick. 
+                This dataset was initially gathered on 180,000 tweets from 2016-2017, particularly about news and politics.  
+                For the prediction model on news, we used the News Dataset (Kaggle Fake & Real News), which consists of ~45,000 news articles (23k fake, 21k real). 
+                We analyze the data characteristics to lead to further data cleaning, of making the subject column consistent, unifying letter case, tokenizing text, and removing common words. 
+            </p>
+        </div>
+
+      <!-- Card 2 -->
+        <div class="method-card">
+            <div class="method-icon"></div>
+            <h3>2. Model Selection & Baselines</h3>
+            <p>
+                We explored logistic regression, Random Forest, XGBoost, and BERT.  
+                BERT was chosen for tweets because it natural language directly.
+                It reads the full text of each tweet and learns meaning from context, sentence structure, and the way ideas are expressed. 
+                XGBoost was chosen for news because it performed most reliably with noisy text, nonlinear patterns,  
+                and imbalanced subject distributions.
+            </p>
+        </div>
+
+      <!-- Card 3 -->
+        <div class="method-card">
+            <div class="method-icon"></div>
+            <h3>3. ChatGPT Prediction</h3>
+            <p>
+                We developed a  Python script and a specific prompt designed to query ChatGPT when a user inputs text. 
+                ChatGPT provides an additional True/False prediction and confidence score based on its general language knowledge.
+            </p>
+        </div>
+
+      <!-- Card 4 -->
+        <div class="method-card">
+            <div class="method-icon"></div>
+            <h3>4. API & Cloud Deployment</h3>
+            <p>
+                Framework: The prediction service is built using Python Flask.
+                Model Integration: The API integrates and hosts all three core models: BERT, XGBoost, and the ChatGPT. 
+                AWS API Gateway forwards requests from our GitHub Pages website to our EC2 instance, 
+                To ensure reliable web access, including robust Cross-Origin Resource Sharing (CORS) allow requests from our GitHub Pages frontend. 
+                and returns structured JSON results instantly.
+            </p>
+        </div>
+
+   </section>
+   
+
+
+
+      <!-- Horizontal Deployment Flow Diagram -->
+  <section class="deploy-section">
+    <h3>🔁 Deployment Flow Overview</h3>
+    <div class="flow-line">
+      <div class="flow-step">
+        <div class="flow-title">1. User Dashboard</div>
+        <div class="flow-desc">User types tweet or news on our GitHub Pages website.</div>
+      </div>
+      <div class="flow-arrow">➜</div>
+
+      <div class="flow-step">
+        <div class="flow-title">2. API Gateway</div>
+        <div class="flow-desc">Frontend sends a POST request to AWS API Gateway.</div>
+      </div>
+      <div class="flow-arrow">➜</div>
+
+      <div class="flow-step">
+        <div class="flow-title">3. EC2 + Flask</div>
+        <div class="flow-desc">Gateway forwards the request to our Flask service running on EC2.</div>
+      </div>
+      <div class="flow-arrow">➜</div>
+
+      <div class="flow-step">
+        <div class="flow-title">4. Models</div>
+        <div class="flow-desc">
+          Flask calls BERT or XGBoost and an independent ChatGPT predictor.
+        </div>
+      </div>
+      <div class="flow-arrow">➜</div>
+
+      <div class="flow-step">
+        <div class="flow-title">5. Response</div>
+        <div class="flow-desc">
+          Flask returns prediction, API Gateway sends JSON back to the dashboard.
+        </div>
+      </div>
+    </div>
+
+
+    <details class="flow-details">
+      <summary>Click for step-by-step explanation</summary>
+      <ol>
+        <li><strong>User Input:</strong> The user enters a tweet or news article in the dashboard textarea.</li>
+        <li><strong>HTTP Request:</strong> JavaScript sends a JSON POST request to AWS API Gateway</li>
+        <li><strong>Routing:</strong> API Gateway forwards the request to our Flask endpoint on the EC2 instance.</li>
+        <li><strong>Run the Models:</strong> The server reads your text and uses our trained models (BERT / XGBoost) plus a ChatGPT predictor to detect whether it looks real or fake</li>
+        <li><strong>Get the Result:</strong> The server sends back a clean, structured answer with the prediction and a confidence score.</li>
+        <li><strong>Dashboard Update:</strong> Our website displays the result for you — including the label, confidence, and the ChatGPT-style explanation.</li>
+      </ol>
+    </details>
+  </div>
+
+  </section>
+
+  <footer>
+    <p>© 2025 STA160 Group 2 Project | Built with ❤️ and GitHub Pages</p>
+  </footer>
+</body>
+</html>

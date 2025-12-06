@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fake News Detector – STA160 Group 2</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+<!-- ================= Header Navigation ================= -->
+<header class="top-bar">
+    <div class="brand">
+        <span class="brand-icon"></span>
+        <span class="brand-name">Fake News Detector</span>
+    </div>
+
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link active">About</a>
+        <a href="dashboard.html" class="nav-link">prediction</a>
+        <a href="methods.html" class="nav-link">Methods</a>
+        <a href="results.html" class="nav-link">Results</a>
+        <a href="team.html" class="nav-link">Team</a>
+    </nav>
+
+</header>
+  
+   
+   <!-- ======= Dashboard Section ======= -->
+   <section id="dashboard">
+  <h2>Twitter Prediction</h2>
+  <p style="text-align:center; color:#555;">
+  <p> Enter a tweet statement below. The backend on AWS will return predictions from our BERT model and from ChatGPT.
+  </p>
+  
+  <!-- BERT + ChatGPT -->
+  <label for="input-text"><strong>Input text</strong></label><br />
+  <textarea id="input-text"
+    rows="6"
+    style="width: 90%; max-width: 1000px"
+    placeholder="Enter text for BERT/ChatGPT prediction..."
+  ></textarea>
+  <br />
+  <button
+    id="predict-btn"
+    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">
+    Predict
+  </button>    
+
+  <div id="predict-result"class="result-box"></div>
+<!-- XGBoost Section -->
+  <h2>🧠 News Prediction</h2>
+  <p style="text-align:center; color:#555;">
+  <p> Enter a News  URL below. The backend on AWS will return predictions from our XGBoost model and from ChatGPT.
+  </p>
+    
+  <label for="input-text"><strong>Input URL</strong></label><br />
+  <textarea id="xgb-input"
+    rows="6"
+    style="width: 90%; max-width: 1000px"
+    placeholder="Enter text for XGBoost prediction..."
+  ></textarea>
+  <br />
+  <button
+    id="xgb-btn"
+    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">
+    Predict (XGBoost)
+  </button>
+
+  <div id="xgb-result" class="result-box"></div>
+</section>
+   <!-- ======= script ======= -->
+<script>
+  const API_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict";  
+
+  const btn = document.getElementById("predict-btn");
+  const input = document.getElementById("input-text");
+  const resultDiv = document.getElementById("predict-result");
+
+  btn.addEventListener("click", async () => {
+    const text = input.value.trim();
+    if (!text) {
+      resultDiv.textContent = "⚠️ Please enter some text.";
+      return;
+    }
+
+    btn.disabled = true;
+    resultDiv.textContent = "⏳ Predicting...";
+
+    try {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: text })
+      });
+      
+      const data = await res.json();
+
+
+      resultDiv.textContent =
+        `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
+        `ChatGPT: ${data.gpt_label}`;
+    } catch (err) {
+      console.error(err);
+      resultDiv.textContent = "❌ Error: " + err.message;
+    } finally {
+      btn.disabled = false;
+    }
+  });
+</script>
+  
+<script>
+  
+  const XGB_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict_xgb";
+
+  const xgbBtn   = document.getElementById("xgb-btn");
+  const xgbInput = document.getElementById("xgb-input");
+  const xgbOut   = document.getElementById("xgb-result");
+
+  xgbBtn.addEventListener("click", async () => {
+    const text = xgbInput.value.trim();
+    if (!text) {
+      xgbOut.textContent = "⚠️ Please enter some text.";
+      return;
+    }
+
+    xgbBtn.disabled = true;
+    xgbOut.textContent = "⏳ Predicting (XGBoost)...";
+
+    try {
+      const res = await fetch(XGB_URL, {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text })
+      });
+
+      if (!res.ok) {
+        const t = await res.text();
+        throw new Error(`HTTP ${res.status} — ${t.slice(0,150)}`);
+      }
+
+      const data = await res.json(); // { xgb_label, xgb_confidence }
+      const conf = (data.xgb_confidence == null) ? "n/a" : data.xgb_confidence;
+      const gptLabel = data.gpt_label || "N/A"; //
+      
+      xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})\n` + 
+      `ChatGPT: ${gptLabel}`;
+    } catch (err) {
+      console.error(err);
+      xgbOut.textContent = "❌ " + err.message;
+    } finally {
+      xgbBtn.disabled = false;
+    }
+  });
+</script>
+<footer>
+    <p>© 2025 STA160 Group 2 Project | Built with ❤️ and GitHub Pages</p>
+  </footer>
+</body>
+</html>

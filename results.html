@@ -1,0 +1,287 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fake News Detector – STA160 Group 2</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+<!-- ================= Header Navigation ================= -->
+<header class="top-bar">
+    <div class="brand">
+        <span class="brand-icon"></span>
+        <span class="brand-name">Fake News Detector</span>
+    </div>
+
+    <nav class="main-nav">
+        <a href="index.html" class="nav-link active">About</a>
+        <a href="dashboard.html" class="nav-link">prediction</a>
+        <a href="methods.html" class="nav-link">Methods</a>
+        <a href="results.html" class="nav-link">Results</a>
+        <a href="team.html" class="nav-link">Team</a>
+    </nav>
+
+</header>
+ 
+ 
+ <!-- ======= Results Section ======= -->
+  <section id="results">
+    <h2> Results & Visualizations</h2>
+
+    <div class="result-grid">
+        <!-- Card 1: Tweet Data Insights -->
+        <div class="result-card">
+                <h3>1. What We Found in the Tweet Data/key Features</h3>
+                <p>
+                Most Twitter users are very consistent: they either tell the truth almost all the time
+                or share false information almost all the time. 
+                <br>The users who spread false information
+                are fewer in number, but they post many more tweets, sometimes over 16,000.
+                </p>
+                <p>
+                People also tend to retweet messages without checking whether they are true or false.
+                Tweets that reference articles usually agree with those articles, even if the articles
+                themselves are misleading.
+                </p>
+                 <ul>
+                    <li>Total word count and total token count</li>
+                    <li>How often short words appear</li>
+                    <li>Adpositions (words like “to”, “from”, “with”)</li>
+                    <li>The number of periods and sentences</li>
+                 </ul>
+                 <p>
+                 Features that were much less useful included average word length, the shortest word,
+                 hashtags, and various account statistics.
+                 </p>
+            </div>
+
+<!-- Card 5: News Dataset Insights -->
+  <div class="result-card">
+    <h3>2. What We Found in the News Dataset</h3>
+    <p>
+      For news articles, we used a Kaggle fake vs real news dataset. During data exploration we
+      saw that fake news and true news behave very differently:
+    </p>
+    <ul>
+      <li>Fake news has more topic categories; true news topics are more consistent.</li>
+      <li>Fake news titles often have messy formatting, such as extra spaces or strange capitalization.</li>
+      <li>Fake news appears more evenly spread out over time, while true news is clustered in clearer time periods.</li>
+      <li>Fake news articles tend to be longer and more dramatic, while true news is shorter and more factual.</li>
+    </ul>
+  </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- ===== BERT Section ===== -->
+<section class="content-section">
+  <h2>BERT vs ChatGPT Score Distributions</h2>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Histogram of BERT scores</h3>
+      <canvas id="bertHist"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Histogram of Chat scores</h3>
+      <canvas id="chatHist"></canvas>
+    </div>
+    
+  </div>
+  <p >
+      To compare the two systems, we ran approximately 200 randomly selected tweets from the NYC mayoral election through both our fine-tuned BERT model and a standardized ChatGPT prompt, 
+      collecting the predicted label and confidence score for each model. On average, ChatGPT found the tweets to be about 20% less true.
+     BERT continued to be the stronger strict classifier. Its predictions were consistent and usually high in confidence, 
+    reflecting how it was trained—directly on labeled truth data using only the text. As we saw in the previous plots, 
+    BERT produced very confident, mostly binary predictions, whereas ChatGPT’s scores were more moderate and varied. 
+    </p>
+</section>
+<script>
+
+const scoreBins = [
+  "0.0–0.1", "0.1–0.2", "0.2–0.3", "0.3–0.4",
+  "0.4–0.5", "0.5–0.6", "0.6–0.7", "0.7–0.8",
+  "0.8–0.9", "0.9–1.0"
+];
+
+const bertCounts = [83, 7, 3, 2, 1, 2, 1, 1, 4, 95];
+
+const chatCounts = [27, 15, 8, 13, 14, 5, 6, 4, 5, 6];
+
+function createHistogram(canvasId, label, counts, xLabel) {
+  const ctx = document.getElementById(canvasId).getContext("2d");
+
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: scoreBins,
+      datasets: [{
+        label: label,
+        data: counts,
+        borderWidth: 1
+        
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        tooltip: {
+          enabled: true,
+          callbacks: {
+            
+            label: (ctx) => `${ctx.label}: ${ctx.parsed.y} samples`
+          }
+        },
+        legend: {
+          display: false
+        }
+      },
+      scales: {
+        x: {
+          title: {
+            display: true,
+            text: xLabel
+          }
+        },
+        y: {
+          title: {
+            display: true,
+            text: "Count"
+          },
+          beginAtZero: true
+        }
+      }
+    }
+  });
+}
+
+
+createHistogram("bertHist", "BERT score count", bertCounts, "BERT score");
+createHistogram("chatHist", "ChatGPT score count", chatCounts, "ChatGPT score");
+</script>
+
+<!-- ===== XGBoost Section ===== -->
+<section class="content-section">
+
+ <h2>XGBoost vs ChatGPT </h2>
+
+  <div class="chart-grid">
+    <div class="chart-card">
+      <h3>Hrediction Accuracy</h3>
+      <canvas id="accuracyChart"></canvas>
+    </div>
+
+    <div class="chart-card">
+      <h3>Confidence Level Distribution</h3>
+      <canvas id="confidenceChart"></canvas>
+    </div>
+    
+    
+  </div>
+    <p>When testing our XBG boost model vs ChatGPT, we subset a random sample of 200 data points from the original data and compared the results with ChatGPT
+       we have to admit that this accuracy does tend to drop once we start leaving data involved in the 2016 election sphere. When inputting more current data, the model is skewed, labeling it as Fake news much more often than Real. 
+    </p>
+</section>
+
+
+<script>
+
+// Accuracy numbers
+const accuracyLabels = ["Model Accuracy", "GPT Accuracy", "Agreement"];
+const accuracyValues = [100, 75, 76];   // modify if needed
+
+// Confidence histogram bins (example estimated values)
+const confidenceBins = ["75", "85", "90", "95", "100"];
+
+// Approx. frequencies from your plot
+const modelConfidence = [2, 3, 5, 10, 180];  
+const gptConfidence = [5, 155, 40, 6, 0];    
+
+// ===============================
+// Chart 1: Accuracy Bar Chart
+// ===============================
+const ctx1 = document.getElementById("accuracyChart").getContext("2d");
+
+new Chart(ctx1, {
+  type: "bar",
+  data: {
+    labels: accuracyLabels,
+    datasets: [{
+      label: "Percentage (%)",
+      data: accuracyValues,
+      backgroundColor: ["#8EC9FF", "#A4E5A8", "#F2A6A6"]
+    }]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        max: 100,
+        title: {
+          display: true,
+          text: "Percentage (%)"
+        }
+      }
+    }
+  }
+});
+
+
+const ctx2 = document.getElementById("confidenceChart").getContext("2d");
+
+new Chart(ctx2, {
+  type: "bar",
+  data: {
+    labels: confidenceBins,
+    datasets: [
+      {
+        label: "Model Confidence",
+        data: modelConfidence,
+        backgroundColor: "rgba(135, 206, 250, 0.5)",
+        borderColor: "rgba(135, 206, 250, 1)",
+        borderWidth: 1
+      },
+      {
+        label: "GPT Confidence",
+        data: gptConfidence,
+        backgroundColor: "rgba(144, 238, 144, 0.5)",
+        borderColor: "rgba(144, 238, 144, 1)",
+        borderWidth: 1
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true,
+        title: {
+          display: true,
+          text: "Frequency"
+        }
+      },
+      x: {
+        title: {
+          display: true,
+          text: "Confidence (%)"
+        }
+      }
+    }
+  }
+});
+</script>
+
+
+
+</div>
+
+
+  <footer>
+    <p>© 2025 STA160 Group 2 Project | Built with ❤️ and GitHub Pages</p>
+  </footer>
+</body>
+</html>
