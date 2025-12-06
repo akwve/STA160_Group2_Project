@@ -41,6 +41,12 @@ Week 10: Submit final dashboard and report <br />
 Fake and real news, https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset/data <br />
 CIC truth seeker dataset 2023, https://www.unb.ca/cic/datasets/truthseeker-2023.html <br />
 
+
+## API Key Requirement   <br />
+This project uses the OpenAI API for model inference.
+For security reasons, we do not include any real API keys in this repository.
+If you want to run the backend or use our API, you must set your own OpenAI API key as an environment.
+
 ## Attribution: <br />
 Bisaillon, C. (n.d.). Fake and Real News Dataset [Data set]. Kaggle. Retrieved from https://www.kaggle.com/datasets/clmentbisaillon/fake-and-real-news-dataset/data <br />
 Dadkhah, S., Zhang, X., Weismann, A. G., Firouzi, A., & Ghorbani, A. A. (2023). The largest social media ground-truth dataset for real/fake content: TruthSeeker [Data set]. Canadian Institute for Cybersecurity, University of New Brunswick. Retrieved from https://www.unb.ca/cic/datasets/truthseeker-2023.html <br />
