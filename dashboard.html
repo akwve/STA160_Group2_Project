@@ -146,10 +146,13 @@ function renderMini(miniId, models){
       
       const data = await res.json();
 
-
+      resultDiv.style.whiteSpace = 'pre-line';
       resultDiv.textContent =
         `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
-        `ChatGPT: ${data.gpt_label}, confidence ${data.gpt_confidence}`
+        `ChatGPT: ${data.gpt_label}`+
+        ((data.gpt_confidence != null) ? `, confidence ${data.gpt_confidence}` : '');
+
+        const gptProb = pickGptConfidence(data, resultDiv.textContent);
         
         renderMini('predict-mini', [
             { name:'BERT',    label: data.bert_label, prob: Number(data.bert_confidence) },
