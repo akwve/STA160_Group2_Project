@@ -76,17 +76,19 @@
 </section>
    <!-- ======= script ======= -->
 <script>
-function renderMini(containerId, models){
-  const box = document.getElementById(containerId);
+function renderMini(miniId, models){
+  const box = document.getElementById(miniId);
   if (!box) return;
 
   box.innerHTML = '';
+
   models.forEach(m=>{
     const row = document.createElement('div');
     row.className = 'row';
+
     const tag = document.createElement('span');
-    tag.className = 'model-tag';
     tag.textContent = m.name;
+    tag.style.opacity = .8;
 
     const barWrap = document.createElement('div');
     barWrap.className = 'bar';
@@ -94,12 +96,12 @@ function renderMini(containerId, models){
     barWrap.appendChild(bar);
 
     const pct = document.createElement('span');
-    if (typeof m.prob === 'number' && !Number.isNaN(m.prob)) {
+
+    if (typeof m.prob === 'number' && !Number.isNaN(m.prob)){
       const p = Math.round(m.prob * 100);
       bar.style.width = p + '%';
       pct.textContent = p + '%';
     } else {
-      bar.style.width = '0%';
       barWrap.style.background = 'transparent';
       pct.textContent = '—';
     }
@@ -110,17 +112,9 @@ function renderMini(containerId, models){
     box.appendChild(row);
   });
 
-  const labels = models.map(m => (m.label||'').toLowerCase()).filter(Boolean);
-  if (labels.length >= 2){
-    const agree = labels.every(l => l === labels[0]);
-    const badge = document.createElement('div');
-    badge.className = 'badge ' + (agree ? 'ok' : 'warn');
-    badge.textContent = agree ? 'Agreement' : 'Disagreement';
-    box.appendChild(badge);
-  }
-
   box.style.display = 'grid';
 }
+
 </script>
 
 <!-- ======= script ======= -->
@@ -206,6 +200,12 @@ function renderMini(containerId, models){
       
       xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})\n` + 
       `ChatGPT: ${gptLabel}`;
+      
+      renderMini('xgb-mini', [
+     { name:'XGBoost', label: data.xgb_label, prob: (data.xgb_confidence!=null?Number(data.xgb_confidence):undefined) },
+     { name:'ChatGPT', label: gptLabel,       prob: (data.gpt_confidence!=null?Number(data.gpt_confidence):undefined) }
+    ]);
+      
     } catch (err) {
       console.error(err);
       xgbOut.textContent = "❌ " + err.message;
