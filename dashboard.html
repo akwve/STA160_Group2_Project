@@ -121,11 +121,21 @@ function renderMini(miniId, models){
 
 <script>
   const API_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict";  
+  
 
   const btn = document.getElementById("predict-btn");
   const input = document.getElementById("input-text");
   const resultDiv = document.getElementById("predict-result");
+  function pickGptConfidence(data, fallbackText) {
 
+  if (data && typeof data.gpt_confidence === 'number') return data.gpt_confidence;
+
+  
+  for (const k of Object.keys(data || {})) {
+    if (/gpt.*(conf|prob|score)/i.test(k) && typeof data[k] === 'number') {
+      return data[k];
+    }
+  }
   btn.addEventListener("click", async () => {
     const text = input.value.trim();
     if (!text) {
@@ -153,7 +163,7 @@ function renderMini(miniId, models){
         ((data.gpt_confidence != null) ? `, confidence ${data.gpt_confidence}` : '');
 
         const gptProb = pickGptConfidence(data, resultDiv.textContent);
-        
+
         renderMini('predict-mini', [
             { name:'BERT',    label: data.bert_label, prob: Number(data.bert_confidence) },
             { name:'ChatGPT', label: data.gpt_label,  prob: gptProb }
