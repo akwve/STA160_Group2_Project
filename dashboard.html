@@ -150,8 +150,6 @@ function renderMini(miniId, models){
       resultDiv.textContent =
         `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
         `ChatGPT: ${data.gpt_label}, confidence ${data.gpt_confidence}`
-        const mChat = resultDiv.textContent.match(/ChatGPT:\s*\w+[, ]+\s*confidence\s*([0-9.]+)/i);
-        const gptProb = mChat ? Number(mChat[1]) : undefined;
         
         renderMini('predict-mini', [
             { name:'BERT',    label: data.bert_label, prob: Number(data.bert_confidence) },
