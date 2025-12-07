@@ -48,10 +48,6 @@
   </button>    
 
   <div id="predict-result"class="result-box"></div>
-  <div id="predict-mini" class="result-mini" style="display:none"></div>
-
-
-
 <!-- XGBoost Section -->
   <h2>News Prediction</h2>
   <p style="text-align:center; color:#555;">
@@ -72,70 +68,15 @@
   </button>
 
   <div id="xgb-result" class="result-box"></div>
-  <div id="xgb-mini" class="result-mini" style="display:none"></div>
 </section>
    <!-- ======= script ======= -->
 <script>
-function renderMini(miniId, models){
-  const box = document.getElementById(miniId);
-  if (!box) return;
-
-  box.innerHTML = '';
-
-  models.forEach(m=>{
-    const row = document.createElement('div');
-    row.className = 'row';
-
-    const tag = document.createElement('span');
-    tag.textContent = m.name;
-    tag.style.opacity = .8;
-
-    const barWrap = document.createElement('div');
-    barWrap.className = 'bar';
-    const bar = document.createElement('div');
-    barWrap.appendChild(bar);
-
-    const pct = document.createElement('span');
-
-    if (typeof m.prob === 'number' && !Number.isNaN(m.prob)){
-      const p = Math.round(m.prob * 100);
-      bar.style.width = p + '%';
-      pct.textContent = p + '%';
-    } else {
-      barWrap.style.background = 'transparent';
-      pct.textContent = '—';
-    }
-
-    row.appendChild(tag);
-    row.appendChild(barWrap);
-    row.appendChild(pct);
-    box.appendChild(row);
-  });
-
-  box.style.display = 'grid';
-}
-
-</script>
-
-<!-- ======= script ======= -->
-
-<script>
   const API_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict";  
-  
 
   const btn = document.getElementById("predict-btn");
   const input = document.getElementById("input-text");
   const resultDiv = document.getElementById("predict-result");
-  function pickGptConfidence(data, fallbackText) {
 
-  if (data && typeof data.gpt_confidence === 'number') return data.gpt_confidence;
-
-  
-  for (const k of Object.keys(data || {})) {
-    if (/gpt.*(conf|prob|score)/i.test(k) && typeof data[k] === 'number') {
-      return data[k];
-    }
-  }
   btn.addEventListener("click", async () => {
     const text = input.value.trim();
     if (!text) {
@@ -156,18 +97,10 @@ function renderMini(miniId, models){
       
       const data = await res.json();
 
-      resultDiv.style.whiteSpace = 'pre-line';
+
       resultDiv.textContent =
         `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
-        `ChatGPT: ${data.gpt_label}`+
-        ((data.gpt_confidence != null) ? `, confidence ${data.gpt_confidence}` : '');
-
-        const gptProb = pickGptConfidence(data, resultDiv.textContent);
-
-        renderMini('predict-mini', [
-            { name:'BERT',    label: data.bert_label, prob: Number(data.bert_confidence) },
-            { name:'ChatGPT', label: data.gpt_label,  prob: gptProb }
-    ]);
+        `ChatGPT: ${data.gpt_label}`;
     } catch (err) {
       console.error(err);
       resultDiv.textContent = "❌ Error: " + err.message;
@@ -214,12 +147,6 @@ function renderMini(miniId, models){
       
       xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})\n` + 
       `ChatGPT: ${gptLabel}`;
-      
-      renderMini('xgb-mini', [
-     { name:'XGBoost', label: data.xgb_label, prob: (data.xgb_confidence!=null?Number(data.xgb_confidence):undefined) },
-     { name:'ChatGPT', label: gptLabel,       prob: (data.gpt_confidence!=null?Number(data.gpt_confidence):undefined) }
-    ]);
-      
     } catch (err) {
       console.error(err);
       xgbOut.textContent = "❌ " + err.message;
