@@ -102,14 +102,63 @@
 <script>
 
 const scoreBins = [
-  "0.0–0.1", "0.1–0.2", "0.2–0.3", "0.3–0.4",
-  "0.4–0.5", "0.5–0.6", "0.6–0.7", "0.7–0.8",
-  "0.8–0.9", "0.9–1.0"
+  "0.00–0.05", "0.05–0.10",
+  "0.10–0.15", "0.15–0.20",
+  "0.20–0.25", "0.25–0.30",
+  "0.30–0.35", "0.35–0.40",
+  "0.40–0.45", "0.45–0.50",
+  "0.50–0.55", "0.55–0.60",
+  "0.60–0.65", "0.65–0.70",
+  "0.70–0.75", "0.75–0.80",
+  "0.80–0.85", "0.85–0.90",
+  "0.90–0.95", "0.95–1.00"
 ];
 
-const bertCounts = [83, 7, 3, 2, 1, 2, 1, 1, 4, 95];
+const bertCounts = [
+ 83, // 0.00–0.05  
+  7,  // 0.05–0.10
+  3,  // 0.10–0.15
+  4,  // 0.15–0.20
+  1,  // 0.20–0.25
+  2,  // 0.25–0.30
+  1,  // 0.30–0.35
+  1,  // 0.35–0.40
+  1,  // 0.40–0.45
+  2,  // 0.45–0.50
+  1,  // 0.50–0.55
+  2,  // 0.55–0.60
+  1,  // 0.60–0.65
+  1,  // 0.65–0.70
+  2,  // 0.70–0.75
+  1,  // 0.75–0.80
+  1,  // 0.80–0.85
+  2,  // 0.85–0.90
+  4,  // 0.90–0.95
+  95  // 0.95–1.00 
+  ];
 
-const chatCounts = [27, 15, 8, 13, 14, 5, 6, 4, 5, 6];
+const chatCounts = [
+  25, // 0.00–0.05
+  28, // 0.05–0.10
+  18, // 0.10–0.15
+  12, // 0.15–0.20
+  7,  // 0.20–0.25
+  12,  // 0.25–0.30
+  3,  // 0.30–0.35
+  23,  // 0.35–0.40
+  16, // 0.40–0.45
+  9, // 0.45–0.50
+  14,  // 0.50–0.55
+  2,  // 0.55–0.60
+  4,  // 0.60–0.65
+  3,  // 0.65–0.70
+  3,  // 0.70–0.75
+  3,  // 0.75–0.80
+  4,  // 0.80–0.85
+  4,  // 0.85–0.90
+  6,  // 0.90–0.95
+  11  // 0.95–1.00
+  ];
 
 function createHistogram(canvasId, label, counts, xLabel) {
   const ctx = document.getElementById(canvasId).getContext("2d");
@@ -191,14 +240,14 @@ createHistogram("chatHist", "ChatGPT score count", chatCounts, "ChatGPT score");
 
 // Accuracy numbers
 const accuracyLabels = ["Model Accuracy", "GPT Accuracy", "Agreement"];
-const accuracyValues = [100, 75, 76];   // modify if needed
+const accuracyValues = [99.75, 75, 76];  
 
-// Confidence histogram bins (example estimated values)
+// Confidence histogram bins 
 const confidenceBins = ["75", "85", "90", "95", "100"];
 
 // Approx. frequencies from your plot
-const modelConfidence = [2, 3, 5, 10, 180];  
-const gptConfidence = [5, 155, 40, 6, 0];    
+const modelConfidence = [0, 3, 3, 10, 185];  
+const gptConfidence = [4, 155, 40, 8, 0];    
 
 // ===============================
 // Chart 1: Accuracy Bar Chart
