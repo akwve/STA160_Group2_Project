@@ -5,20 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Fake News Detector – STA160 Group 2</title>
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    .result-box { white-space: pre-line; }
-    .result-mini{display:grid;gap:.5rem;margin-top:.5rem}
-    .result-mini .row{display:grid;grid-template-columns:90px 1fr 52px;align-items:center;gap:.5rem}
-    .bar{height:8px;background:#223;border-radius:999px;overflow:hidden}
-    .bar-fill{height:100%;width:0%;transition:width .25s}
-    .fill-bert{background:#6ec1ff}
-    .fill-chat{background:#a78bfa}
-    .fill-xgb{background:#5eead4}
-    .model-tag{font-size:.82rem;opacity:.85}
-    .pct{font-variant-numeric: tabular-nums}
-    textarea{color:#e6e6e6;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px}
-    button:disabled{opacity:.6}
-  </style>
 </head>
 
 <body>
@@ -54,7 +40,7 @@
   <p>Enter a News URL below. The backend on AWS will return predictions from our XGBoost model and from ChatGPT.</p>
 
   <label for="xgb-input"><strong>Input URL</strong></label><br />
-  <textarea id="xgb-input" rows="6" style="width: 90%; max-width: 1000px" placeholder="Enter text for XGBoost prediction..."></textarea>
+  <textarea id="xgb-input" rows="6" style="width: 90%; max-width: 1000px" placeholder="Enter URL for XGBoost/ChatGPT  prediction..."></textarea>
   <br />
   <button id="xgb-btn" style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">Predict (XGBoost)</button>
 
