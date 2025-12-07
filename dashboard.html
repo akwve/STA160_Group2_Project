@@ -48,6 +48,10 @@
   </button>    
 
   <div id="predict-result"class="result-box"></div>
+  <div id="predict-mini" class="result-mini" style="display:none"></div>
+
+
+
 <!-- XGBoost Section -->
   <h2>News Prediction</h2>
   <p style="text-align:center; color:#555;">
@@ -68,8 +72,59 @@
   </button>
 
   <div id="xgb-result" class="result-box"></div>
+  <div id="xgb-mini" class="result-mini" style="display:none"></div>
 </section>
    <!-- ======= script ======= -->
+<script>
+function renderMini(containerId, models){
+  const box = document.getElementById(containerId);
+  if (!box) return;
+
+  box.innerHTML = '';
+  models.forEach(m=>{
+    const row = document.createElement('div');
+    row.className = 'row';
+    const tag = document.createElement('span');
+    tag.className = 'model-tag';
+    tag.textContent = m.name;
+
+    const barWrap = document.createElement('div');
+    barWrap.className = 'bar';
+    const bar = document.createElement('div');
+    barWrap.appendChild(bar);
+
+    const pct = document.createElement('span');
+    if (typeof m.prob === 'number' && !Number.isNaN(m.prob)) {
+      const p = Math.round(m.prob * 100);
+      bar.style.width = p + '%';
+      pct.textContent = p + '%';
+    } else {
+      bar.style.width = '0%';
+      barWrap.style.background = 'transparent';
+      pct.textContent = '—';
+    }
+
+    row.appendChild(tag);
+    row.appendChild(barWrap);
+    row.appendChild(pct);
+    box.appendChild(row);
+  });
+
+  const labels = models.map(m => (m.label||'').toLowerCase()).filter(Boolean);
+  if (labels.length >= 2){
+    const agree = labels.every(l => l === labels[0]);
+    const badge = document.createElement('div');
+    badge.className = 'badge ' + (agree ? 'ok' : 'warn');
+    badge.textContent = agree ? 'Agreement' : 'Disagreement';
+    box.appendChild(badge);
+  }
+
+  box.style.display = 'grid';
+}
+</script>
+
+<!-- ======= script ======= -->
+
 <script>
   const API_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict";  
 
@@ -101,6 +156,10 @@
       resultDiv.textContent =
         `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
         `ChatGPT: ${data.gpt_label}`;
+        renderMini('predict-mini', [
+            { name:'BERT',    label: data.bert_label, prob: Number(data.bert_confidence) },
+            { name:'ChatGPT', label: data.gpt_label,  prob: undefined }
+    ]);
     } catch (err) {
       console.error(err);
       resultDiv.textContent = "❌ Error: " + err.message;

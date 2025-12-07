@@ -335,6 +335,17 @@ textarea:focus {
       "Liberation Mono", "Courier New", monospace;
 }
 
+.result-mini{display:grid;gap:.5rem;margin-top:.5rem}
+.result-mini .row{display:grid;grid-template-columns:80px 1fr 48px;align-items:center;gap:.5rem}
+.bar{height:8px;background:#223;border-radius:999px;overflow:hidden}
+.bar>div{height:100%;width:0%;background:#5bc0de;transition:width .25s}
+.badge{justify-self:start;margin-top:.25rem;padding:.15rem .6rem;border-radius:999px;font-size:.75rem}
+.badge.ok{background:rgba(16,185,129,.15);color:#10b981}
+.badge.warn{background:rgba(245,158,11,.15);color:#f59e0b}
+.model-tag{font-size:.8rem;opacity:.8}
+
+
+
 .team {
   display: flex;
   justify-content: space-around;
@@ -568,7 +579,10 @@ footer {
 .result-desc {
     margin-top: 10px;
     line-height: 1.6;
+    
 }
+
+
 
 /* ===== DEPLOYMENT FLOW SECTION（phone） ===== */
 @media (max-width: 900px) {
