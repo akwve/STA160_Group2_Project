@@ -1,88 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Fake News Detector – STA160 Group 2</title>
-    <link rel="stylesheet" href="styles.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fake News Detector – STA160 Group 2</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .result-box { white-space: pre-line; }
+    .result-mini{display:grid;gap:.5rem;margin-top:.5rem}
+    .result-mini .row{display:grid;grid-template-columns:90px 1fr 52px;align-items:center;gap:.5rem}
+    .bar{height:8px;background:#223;border-radius:999px;overflow:hidden}
+    .bar-fill{height:100%;width:0%;transition:width .25s}
+    .fill-bert{background:#6ec1ff}
+    .fill-chat{background:#a78bfa}
+    .fill-xgb{background:#5eead4}
+    .model-tag{font-size:.82rem;opacity:.85}
+    .pct{font-variant-numeric: tabular-nums}
+    textarea{color:#e6e6e6;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px}
+    button:disabled{opacity:.6}
+  </style>
 </head>
 
 <body>
-<!-- ================= Header Navigation ================= -->
 <header class="top-bar">
-    <div class="brand">
-        <span class="brand-icon"></span>
-        <span class="brand-name">Fake News Detector</span>
-    </div>
-
-    <nav class="main-nav">
-        <a href="index.html" class="nav-link active">About</a>
-        <a href="dashboard.html" class="nav-link">prediction</a>
-        <a href="methods.html" class="nav-link">Methods</a>
-        <a href="results.html" class="nav-link">Results</a>
-        <a href="team.html" class="nav-link">Team</a>
-    </nav>
-
+  <div class="brand">
+    <span class="brand-icon"></span>
+    <span class="brand-name">Fake News Detector</span>
+  </div>
+  <nav class="main-nav">
+    <a href="index.html" class="nav-link active">About</a>
+    <a href="dashboard.html" class="nav-link">prediction</a>
+    <a href="methods.html" class="nav-link">Methods</a>
+    <a href="results.html" class="nav-link">Results</a>
+    <a href="team.html" class="nav-link">Team</a>
+  </nav>
 </header>
-  
-   
-   <!-- ======= Dashboard Section ======= -->
-   <section id="dashboard">
+
+<section id="dashboard">
   <h2>Twitter Prediction</h2>
-  <p style="text-align:center; color:#555;">
-  <p> Enter a tweet statement below. The backend on AWS will return predictions from our BERT model and from ChatGPT.
-  </p>
-  
+  <p>Enter a tweet statement below. The backend on AWS will return predictions from our BERT model and from ChatGPT.</p>
+
   <!-- BERT + ChatGPT -->
   <label for="input-text"><strong>Input text</strong></label><br />
-  <textarea id="input-text"
-    rows="6"
-    style="width: 90%; max-width: 1000px"
-    placeholder="Enter text for BERT/ChatGPT prediction..."
-  ></textarea>
+  <textarea id="input-text" rows="6" style="width: 90%; max-width: 1000px" placeholder="Enter text for BERT/ChatGPT prediction..."></textarea>
   <br />
-  <button
-    id="predict-btn"
-    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">
-    Predict
-  </button>    
+  <button id="predict-btn" style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">Predict</button>
 
-  <div id="predict-result"class="result-box"></div>
-<!-- XGBoost Section -->
+  <div id="predict-result" class="result-box"></div>
+
+  <div id="predict-mini" class="result-mini" style="display:none"></div>
+
   <h2>News Prediction</h2>
-  <p style="text-align:center; color:#555;">
-  <p> Enter a News  URL below. The backend on AWS will return predictions from our XGBoost model and from ChatGPT.
-  </p>
-    
-  <label for="input-text"><strong>Input URL</strong></label><br />
-  <textarea id="xgb-input"
-    rows="6"
-    style="width: 90%; max-width: 1000px"
-    placeholder="Enter text for XGBoost prediction..."
-  ></textarea>
+  <p>Enter a News URL below. The backend on AWS will return predictions from our XGBoost model and from ChatGPT.</p>
+
+  <label for="xgb-input"><strong>Input URL</strong></label><br />
+  <textarea id="xgb-input" rows="6" style="width: 90%; max-width: 1000px" placeholder="Enter text for XGBoost prediction..."></textarea>
   <br />
-  <button
-    id="xgb-btn"
-    style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">
-    Predict (XGBoost)
-  </button>
+  <button id="xgb-btn" style="margin-top: 10px; padding: 8px 16px; background: #1976d2; color: white; border: none; border-radius: 4px">Predict (XGBoost)</button>
 
   <div id="xgb-result" class="result-box"></div>
+  <div id="xgb-mini" class="result-mini" style="display:none"></div>
 </section>
-   <!-- ======= script ======= -->
-<script>
-  const API_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict";  
 
+<!-- ================= Scripts ================= -->
+<script>
+
+  function ensureMiniAfter(targetId, miniId){
+    const anchor = document.getElementById(targetId);
+    if (!anchor) return null;
+    let box = document.getElementById(miniId);
+    if (!box){
+      box = document.createElement('div');
+      box.id = miniId;
+      box.className = 'result-mini';
+      box.style.display = 'none';
+      anchor.insertAdjacentElement('afterend', box);
+    }
+    return box;
+  }
+
+
+  function renderMini(miniId, models){
+    const box = document.getElementById(miniId);
+    if (!box) return;
+    box.innerHTML = '';
+    models.forEach(m=>{
+      const row = document.createElement('div'); row.className='row';
+      const tag = document.createElement('span'); tag.className='model-tag'; tag.textContent = m.name;
+      const bar = document.createElement('div'); bar.className='bar';
+      const fill = document.createElement('div');
+      fill.className = 'bar-fill ' + (m.kind==='bert'?'fill-bert': m.kind==='chat'?'fill-chat':'fill-xgb');
+      const pct = document.createElement('span'); pct.className='pct';
+
+      if (typeof m.prob==='number' && !Number.isNaN(m.prob)){
+        const p = Math.round(m.prob*100);
+        fill.style.width = p + '%';
+        pct.textContent = p + '%';
+      } else {
+  
+        bar.style.background = 'transparent';
+        pct.textContent = '—';
+      }
+      bar.appendChild(fill);
+      row.appendChild(tag); row.appendChild(bar); row.appendChild(pct);
+      box.appendChild(row);
+    });
+    box.style.display='grid';
+  }
+
+
+  function pickGptConfidence(data, fallbackText) {
+    if (data && typeof data.gpt_confidence === 'number') return data.gpt_confidence;
+    for (const k of Object.keys(data||{})) {
+      if (/gpt.*(conf|prob|score)/i.test(k) && typeof data[k]==='number') return data[k];
+    }
+    const m = (fallbackText||'').match(/ChatGPT[^0-9]*confidence[^0-9]*([0-9]*\.?[0-9]+)/i);
+    return m ? Number(m[1]) : undefined;
+  }
+</script>
+
+<script>
+  // ===== Twitter (BERT + ChatGPT) =====
+  const API_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict";
   const btn = document.getElementById("predict-btn");
   const input = document.getElementById("input-text");
   const resultDiv = document.getElementById("predict-result");
 
   btn.addEventListener("click", async () => {
     const text = input.value.trim();
-    if (!text) {
-      resultDiv.textContent = "⚠️ Please enter some text.";
-      return;
-    }
+    if (!text) { resultDiv.textContent = "⚠️ Please enter some text."; return; }
 
     btn.disabled = true;
     resultDiv.textContent = "⏳ Predicting...";
@@ -92,15 +138,22 @@
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text: text })
+        body: JSON.stringify({ text })
       });
-      
       const data = await res.json();
 
 
       resultDiv.textContent =
         `BERT prediction: ${data.bert_label} (confidence: ${data.bert_confidence})\n` +
-        `ChatGPT: ${data.gpt_label}`;
+        `ChatGPT: ${data.gpt_label}` + ((data.gpt_confidence!=null)?`, confidence ${data.gpt_confidence}`:'');
+
+
+      ensureMiniAfter('predict-result','predict-mini');
+      const gptProb = pickGptConfidence(data, resultDiv.textContent);
+      renderMini('predict-mini', [
+        { name:'BERT',    label:data.bert_label, prob:(data.bert_confidence!=null?Number(data.bert_confidence):undefined), kind:'bert' },
+        { name:'ChatGPT', label:data.gpt_label,  prob:gptProb, kind:'chat' }
+      ]);
     } catch (err) {
       console.error(err);
       resultDiv.textContent = "❌ Error: " + err.message;
@@ -109,21 +162,17 @@
     }
   });
 </script>
-  
-<script>
-  
-  const XGB_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict_xgb";
 
+<script>
+  // ===== News (XGBoost + ChatGPT) =====
+  const XGB_URL = "https://fb7tcn8sya.execute-api.us-east-2.amazonaws.com/prod/predict_xgb";
   const xgbBtn   = document.getElementById("xgb-btn");
   const xgbInput = document.getElementById("xgb-input");
   const xgbOut   = document.getElementById("xgb-result");
 
   xgbBtn.addEventListener("click", async () => {
     const text = xgbInput.value.trim();
-    if (!text) {
-      xgbOut.textContent = "⚠️ Please enter some text.";
-      return;
-    }
+    if (!text) { xgbOut.textContent = "⚠️ Please enter some text."; return; }
 
     xgbBtn.disabled = true;
     xgbOut.textContent = "⏳ Predicting (XGBoost)...";
@@ -135,18 +184,27 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text })
       });
-
       if (!res.ok) {
         const t = await res.text();
         throw new Error(`HTTP ${res.status} — ${t.slice(0,150)}`);
       }
 
-      const data = await res.json(); // { xgb_label, xgb_confidence }
+      const data = await res.json(); // { xgb_label, xgb_confidence, gpt_label?, gpt_confidence? }
       const conf = (data.xgb_confidence == null) ? "n/a" : data.xgb_confidence;
-      const gptLabel = data.gpt_label || "N/A"; //
-      
-      xgbOut.textContent = `XGBoost: ${data.xgb_label} (confidence: ${conf})\n` + 
-      `ChatGPT: ${gptLabel}`;
+      const gptLabel = data.gpt_label || "N/A";
+
+ 
+      xgbOut.textContent =
+        `XGBoost: ${data.xgb_label} (confidence: ${conf})\n` +
+        `ChatGPT: ${gptLabel}` + ((data.gpt_confidence!=null)?`, confidence ${data.gpt_confidence}`:'');
+
+     
+      ensureMiniAfter('xgb-result','xgb-mini');
+      const gptProb2 = pickGptConfidence(data, xgbOut.textContent);
+      renderMini('xgb-mini', [
+        { name:'XGBoost', label:data.xgb_label, prob:(data.xgb_confidence!=null?Number(data.xgb_confidence):undefined), kind:'xgb' },
+        { name:'ChatGPT', label:gptLabel,       prob:gptProb2, kind:'chat' }
+      ]);
     } catch (err) {
       console.error(err);
       xgbOut.textContent = "❌ " + err.message;
@@ -155,10 +213,9 @@
     }
   });
 </script>
+
 <footer>
-    <p>© 2025 STA160 Group 2 Project | Built with ❤️ and GitHub Pages</p>
-  </footer>
-
-
+  <p>© 2025 STA160 Group 2 Project | Built with ❤️ and GitHub Pages</p>
+</footer>
 </body>
 </html>
